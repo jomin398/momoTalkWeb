@@ -1,0 +1,180 @@
+@font-face {
+  font-family: "GyeonggiMedium";
+  src: url('../fonts/gyeonggi_medium.otf');
+}
+:root {
+  --stroke-b: -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  --stroke-w: -1px -1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px 1px 0 #fff;
+}
+
+body {
+  position: fixed;
+  inset: 0px;
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+  user-select: none;
+  touch-action: none;
+  font: 14px sans-serif;
+  height: 100%;
+}
+
+body.init {
+  background: #fa92a4;
+  background-size: 100% 100%;
+}
+
+body.main {
+  background-color: white;
+}
+
+.center {
+  position: absolute;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  /* margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
+}
+
+#logo.init {
+  animation: fadeIn 1s;
+  top: 50%;
+  left: 40%;
+}
+
+.contain {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+}
+
+.stretch {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.momoTalk.main {
+  display: none;
+  /* display: grid;  */
+  grid-template-columns: 0.3fr 1.4fr 1.3fr;
+  grid-template-rows: 0.2fr 0.3fr 2.5fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "h h h"
+    "i l m"
+    "i l m";
+  height: 100%;
+}
+
+.momoTalk.main .header {
+  grid-area: h;
+  color: white;
+  font-size: 2em;
+  background-color: #fa92a4;
+  font-weight: bolder;
+  padding: 10px;
+}
+
+.momoTalk.main .header i {
+  color: white;
+}
+
+.momoTalk.main .sidebar-i {
+  grid-area: i;
+  height: 100%;
+  font-size: 3em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  float: right;
+  background-color: #3a3a3a;
+
+}
+
+.momoTalk.main .sidebar-i a {
+  color: white;
+  position: relative;
+}
+
+.momoTalk.main .sidebar-i a:nth-child(1) {
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+.sidebar-i span#tCount{
+  font-size: .4em;
+  border-radius: 5px;
+  padding: 0 .4em;
+  top: -3px;
+  right: -0.7em;
+  position: absolute;
+  /* margin: -20px 0px; */
+  background-color: brown;
+}
+.momoTalk.main .chr-list {
+  grid-area: l;
+  background-color: #ececec;
+  font-family: "GyeonggiMedium",Arial, Helvetica, sans-serif;
+  padding: 5px;
+}
+.momoTalk.main .chr-list .list_header{
+  display: grid;
+  grid-template-columns: 1.6fr 0.9fr 0.5fr; 
+  grid-template-rows: 0.5fr; 
+  gap: 0px 0px; 
+  margin: 5px;
+  grid-template-areas: 
+    "m_ct b1 b2"; 
+}
+.list_header .order{
+  margin-right: 10px;
+}
+.list_header #unreadCt{
+  font-size: 1.4em;
+  color:black;
+  font-weight: bolder;
+}
+.momoTalk.main .msg-view {
+  grid-area: m;
+  margin: 50% auto;
+}
+
+.momoTalk.main .msg-view .noti {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 1.2em;
+  font-family: "GyeonggiMedium",Arial, Helvetica, sans-serif;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

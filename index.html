@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+  -->
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+  <title>momotalk</title>
+  <link rel="stylesheet" href="./lib/FontAwesome/css/all.css">
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+
+  <script src="./src/index.js"></script>
+</head>
+
+<body class="init">
+  <div id="init_display">
+    <img id="logo" class="center init" src="./images/logo.png" />
+  </div>
+  <!-- <div class="header-wrapper" style="display: none;">
+    <header class="header">
+      <div class="header__header-column">
+        <h1 class="header__title">Chats</h1>
+      </div>
+      <div class="header__header-column">
+        <span class="header__icon">
+          <i class="fas fa-search"></i>
+        </span>
+        <span class="header__icon">
+          <i class="far fa-comment"></i>
+        </span>
+        <span class="header__icon">
+          <a href="settings.html">
+            <i class="fas fa-cog"></i>
+          </a>
+        </span>
+      </div>
+    </header> -->
+    <div class="momoTalk main">
+        <div class="header">
+            <a href="">
+                <i class="fas fa-question-square"></i>
+            </a>
+        </div>
+        <div class="sidebar-i">
+            <a href="">
+                <i class="fas fa-user"></i>
+            </a>
+            <a href="">
+                <i class="fad fa-comment-alt-dots"></i>
+                <span id="tCount">1</span>
+            </a>
+        </div>
+        <div class="chr-list">
+            <div class="list_header">
+                <div id="unreadCt">안 읽은 메시지</div>
+                <button class="order"></button>
+                <button class="order_org"></button>
+            </div>
+            <hr>
+            <div class="chr-list_lists"></div>
+        </div>
+        <div class="msg-view">
+            <div class="noti" id="nostu">
+                학생을 선택해주세요.
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
+
+</html>
