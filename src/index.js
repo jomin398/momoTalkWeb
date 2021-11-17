@@ -42,6 +42,41 @@ function momoTalk() {
     momoTalk.prototype.renderUserLists = function () {
         console.log( this.people.rawDB);
         _c= this.people.rawDB.students[0];
+        _ew = document.createElement('li');
+        _ew.className = 'chats__chat chat';
+        _e = document.createElement('a');
+        _fw = document.createElement('div');
+        _fw.className = 'chats_chatfriend friend friend--lg';
+        _dirBase = './assets/images/';
+        for (i=0;i<2;i++){
+            _fwc = document.createElement('div');
+            _fwc.className = 'friend__column';
+            //0: left, 1:right; 
+            if(i==0){
+                _fci = document.createElement('img');
+                _fci.src = _dirBase+_c.c+'.png';
+                _fc = document.createElement('div');
+                _fc.className = 'friend__content';
+                
+                //name
+                _fcn = document.createElement('div');
+                _fcn.className = 'friend__name';
+                _fcn.innerText = _c.n;
+                
+                //room message
+                _fct = document.createElement('div');
+                _fct.className = 'friend__bottom-text';
+                _fct.innerText = _c.s?_c.s:'상태 메시지';
+
+                _fc.append(_fcn,_fct)
+                _fwc.append(_fci,_fc)
+            }else if(i==2){
+
+            }
+            _fw.appendChild(_fwc)
+        }
+        _e.appendChild(_fw)
+        _ew.appendChild(_e)
     }
     return momoTalk;
 }
