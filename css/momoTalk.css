@@ -1,0 +1,114 @@
+.momoTalk.main {
+    display: none;
+    /* display: grid;  */
+    grid-template-columns: 0fr 1fr 1.3fr;
+    grid-template-rows: 0.1fr 0.3fr 2.5fr;
+    gap: 0px 0px;
+    grid-template-areas:
+        "h h h"
+        "i l m"
+        "i l m";
+    font-family: "GyeonggiMedium", Arial, Helvetica, sans-serif;
+    height: inherit;
+}
+
+.momoTalk.main .header {
+    grid-area: h;
+    color: white;
+    font-size: 2em;
+    background-color: #fa92a4;
+    font-weight: bolder;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.momoTalk.main .header i {
+    color: white;
+    padding-left: 0.3em;
+}
+
+.momoTalk.main .sidebar-i {
+    padding: 0 14px;
+    grid-area: i;
+    font-size: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #5d668b;
+
+}
+
+.momoTalk.main .sidebar-i a {
+    color: white;
+    position: relative;
+}
+
+.momoTalk.main .sidebar-i a:nth-child(1) {
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+.momoTalk.main .sidebar-i span#tCount {
+    font-size: .4em;
+    border-radius: 5px;
+    padding: 0 .4em;
+    top: -6px;
+    right: -0.7em;
+    position: absolute;
+    /* margin: -20px 0px; */
+    background-color: brown;
+}
+
+.momoTalk.main .chr-list {
+    grid-area: l;
+    background-color: #ececec;
+    padding: 5px;
+}
+
+.momoTalk.main .chr-list_lists {
+    margin-bottom: 38px;
+    padding: 0px 10px;
+    box-sizing: border-box;
+    list-style: none;
+    color: #020202;
+}
+
+.momoTalk.main .chr-list_lists li a {
+    color: #020202;
+    text-decoration: none;
+}
+
+.momoTalk.main .chr-list .list_header {
+    display: grid;
+    grid-template-columns: 1.6fr 0.4fr 0.2fr;
+    grid-template-rows: 0.5fr;
+    gap: 0px 0px;
+    margin: 5px;
+    grid-template-areas:
+        "m_ct b1 b2";
+}
+
+.momoTalk.main .list_header .order {
+    margin-right: 10px;
+
+    color: black;
+    font-weight: bolder;
+}
+
+/* .list_header .order_org {
+  
+  } */
+
+.momoTalk.main .list_header .order_org i:nth-child(2) {
+    color: #5d668b;
+
+}
+
+.momoTalk.main .list_header #unreadCt {
+    font-size: 14px;
+    color: black;
+    font-weight: bolder;
+    margin: 5px 0;
+}
