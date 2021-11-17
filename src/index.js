@@ -2,6 +2,7 @@ let MomoTalk = null;
 function momoTalk(){
     function momoTalk(){
         this.mainElm = null;
+        this.isMob = false;
         this.people = {
             status:null,
             chrs:null
@@ -11,7 +12,6 @@ function momoTalk(){
         let xhr = new XMLHttpRequest();
         document.querySelector('#init_display').remove();
         document.body.className = 'main';
-        
         const continer = document.querySelector('.momoTalk.main');
         this.mainElm = continer;
         continer.style.display= 'grid';
