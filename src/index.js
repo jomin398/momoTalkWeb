@@ -77,7 +77,7 @@ function momoTalk() {
     _countTotal = 0;
     if (this.people.unread) {
       this.people.unread.forEach((e, i) => {
-        _countTotal += e[2] != -1 ? e[2] + 1 : 0;
+        _countTotal += e[2].length;
       });
       let el = this.mainElm.querySelector('.sidebar-i span#tCount');
       el.style.display = 'block';
@@ -94,10 +94,15 @@ function momoTalk() {
       _fw.className = 'chats_chatfriend friend friend--lg';
       _c = this.people.unread[i];
       _name = !isNaN(_c[0]) ? this.people.DB[_c[0]].n : _c[0];
-      _msg = _c[3];
-      _time = new Date(_c[1] != -1 ? _c[1] : new Date().getTime());
-      _time = _time.toLocaleTimeString('ko-KR', { hour: "numeric", minute: "numeric", hour12: true })
-      _count = _c[2];
+      _msg = _c[2][0];
+      _d=(number)=> { return Math.max(Math.floor(Math.log10(Math.abs(number))), 0) + 1; };
+      _time = _c[1];
+      _d = _d(Math.abs( _time));
+      _nowOnMili=new Date().getTime();    
+      _time = _d<4&&_time==-1?_nowOnMili:(Math.sign(_time)!=1?_nowOnMili+_time:_time);
+      _time = new Date(_time).toLocaleTimeString(undefined, { day: "numeric",hour: "numeric", minute: "numeric", hour12: true });
+
+      _count = _c[2].length;
 
       console.log([_name, _time, _msg, _count, _countTotal]);
       for (j = 0; j < 2; j++) {
@@ -109,7 +114,7 @@ function momoTalk() {
           console.log(_c[0]);
           console.log(isNaN(_c[0]));
           console.log(_dirBase + this.people.DB[_c[0]].c + '.png')
-          _fci.src = !isNaN(_c[0]) && _c[0]<=58? _dirBase + this.people.DB[_c[0]].c + '.png' : '';
+          _fci.src = !isNaN(_c[0])? _dirBase + this.people.DB[_c[0]].c + '.png' : '';
           _fci.className = 'm-avatar friend__avatar';
           _fc = document.createElement('div');
           _fc.className = 'friend__content';
@@ -122,7 +127,7 @@ function momoTalk() {
           //room message
           _fct = document.createElement('div');
           _fct.className = 'friend__bottom-text';
-          _fct.innerText = _msg ? (_msg[0].m) : '상태 메시지';
+          _fct.innerText = _msg.m ? (_msg.m) : '상태 메시지';
           _fc.append(_fcn, _fct);
           _fwc.append(_fci, _fc);
 
@@ -136,7 +141,7 @@ function momoTalk() {
             _crw.classList.add('unread');
             _cr = document.createElement('div');
             _cr.className = 'chat__remain-count';
-            _cr.innerText = _count + 1;
+            _cr.innerText = _count;
             _crw.appendChild(_cr);
           };
           _fwc.append(_sp, _crw);

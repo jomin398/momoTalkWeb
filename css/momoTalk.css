@@ -15,7 +15,7 @@
 .momoTalk.main .header {
     grid-area: h;
     color: white;
-    font-size: 2em;
+    font-size: 18px;
     background-color: #fa92a4;
     font-weight: bolder;
     padding: 10px;
@@ -29,20 +29,29 @@
 }
 
 .momoTalk.main .sidebar-i {
-    padding: 0 14px;
+    text-align: center;
+    width: 2em;
+    position: relative;
     grid-area: i;
     font-size: 2em;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
     background-color: #5d668b;
-
+    transition: 0.5s;
 }
 
 .momoTalk.main .sidebar-i a {
     color: white;
     position: relative;
+    padding: 10px 8px;
+    text-decoration: none;
+    font-size: 25px;
+    /* color: #818181; */
+    display: block;
+    transition: 0.3s;
+}
+
+.momoTalk.main .sidebar-i a.select {
+    background-color: white;
+    color: #fa92a4;
 }
 
 .momoTalk.main .sidebar-i a:nth-child(1) {
@@ -52,13 +61,13 @@
 
 .momoTalk.main .sidebar-i span#tCount {
     display: none;
-    font-size: .4em;
+    font-size: 0.45em;
     border-radius: 5px;
-    padding: 0 .4em;
-    top: -6px;
-    right: -0.7em;
+    padding: 0 0.4em;
+    top: 3px;
+    right: 0.7em;
     position: absolute;
-    /* margin: -20px 0px; */
+    color: white;
     background-color: brown;
 }
 
