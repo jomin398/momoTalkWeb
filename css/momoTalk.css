@@ -51,6 +51,7 @@
 }
 
 .momoTalk.main .sidebar-i span#tCount {
+    display: none;
     font-size: .4em;
     border-radius: 5px;
     padding: 0 .4em;
@@ -88,7 +89,7 @@
     color: inherit;
     text-align: center;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 14px;
 }
 
 .list_header .right {
@@ -98,17 +99,16 @@
 
 .list_header .right button {
     padding: 0 14px;
-    height: 100%;
+    font-size: 11px;
     font-weight: bolder;
 }
 
-.list_header .right button i {
-    font-size: 17px;
+.list_header .right button:nth-child(2) {
+    font-size: 13px;
 }
 
 .momoTalk.main .list_header .order_org i:nth-child(2) {
     color: #5d668b;
-
 }
 
 .momoTalk.main .list_header #unreadCt {
