@@ -2,48 +2,51 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>momotalk</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TahirAhmad01/Fontawsome_pro_5.11.2@master/fsm/css/all.css">
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>momotalk</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TahirAhmad01/Fontawsome_pro_5.11.2@master/fsm/css/all.css">
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
 
-    <script src="./src/index.js"></script>
+  <script src="./src/index.js"></script>
 
 </head>
 
 <body class="init">
-    <div class="init_display">
-        <img id="logo" class="init" src="./images/logo.png" />
+  <div class="init_display">
+    <img id="logo" class="init" src="./images/logo.png" />
+  </div>
+  <div class="momoTalk main">
+    <div class="header">
+      <a href="">
+        <i class="fas fa-question-square"></i>
+      </a>
     </div>
-    <div class="momoTalk main">
-        <div class="header">
-          <a href="">
-            <i class="fas fa-question-square"></i>
-          </a>
+    <div class="sidebar-i">
+      <a href="">
+        <i class="fas fa-user"></i>
+      </a>
+      <a href="">
+        <i class="fad fa-comment-alt-dots"></i>
+        <span id="tCount">1</span>
+      </a>
+    </div>
+    <div class="chr-list">
+      <div class="list_header">
+        <a id="unreadCt">안 읽은 메시지</a>
+        <div class="right">
+          <button class="order">최신</button>
+          <button class="order_org">
+            <i class="fa fa-solid fa-bars"></i>
+            <i class="fas fa-long-arrow-alt-up"></i>
+          </button>
         </div>
-        <div class="sidebar-i">
-          <a href="">
-            <i class="fas fa-user"></i>
-          </a>
-          <a href="">
-            <i class="fad fa-comment-alt-dots"></i>
-            <span id="tCount">1</span>
-          </a>
-        </div>
-        <div class="chr-list">
-          <div class="list_header">
-            <div id="unreadCt">안 읽은 메시지</div>
-            <button class="order">최신</button>
-            <button class="order_org">
-              <i class="fa fa-solid fa-bars"></i>
-              <i class="fas fa-long-arrow-alt-down"></i>
-            </button>
-          </div>
-          <hr>
-          <ul class="chr-list_lists">
-            <!--<li class="chats__chat chat">
+
+      </div>
+      <hr>
+      <ul class="chr-list_lists">
+        <!--<li class="chats__chat chat">
               <a href="chat.html">
                 <div class="chats_chatfriend friend friend--lg">
                   <div class="friend__column">
@@ -70,14 +73,14 @@
                 </div>
               </a>
             </li>-->
-          </ul>
-        </div>
-        <div class="msg-view">
-          <div class="noti" id="nostu">
-            학생을 선택해주세요.
-          </div>
-        </div>
+      </ul>
+    </div>
+    <div class="msg-view">
+      <div class="noti" id="nostu">
+        학생을 선택해주세요.
       </div>
+    </div>
+  </div>
 </body>
 
 </html>

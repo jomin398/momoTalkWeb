@@ -76,7 +76,7 @@ function momoTalk() {
     _fw.className = 'chats_chatfriend friend friend--lg';
     _dirBase = './assets/images/';
     _name = !isNaN(_c[0]) ? this.people.DB[_c[0]].n : _c[0];
-    _msg = _c[2];
+    _msg = _c[3];
     _time = new Date(_c[1] != -1 ? _c[1] : new Date().getTime());
     _time = _time.toLocaleTimeString('ko-KR', { hour: "numeric", minute: "numeric", hour12: true })
     console.log([_name, _time, _msg]);
@@ -107,7 +107,15 @@ function momoTalk() {
         _fwc.append(_fci, _fc)
         
       } else if (i == 2) {
-
+        _sp = document.createElement('span');
+        _sp.className = 'chat__timestamp';
+        _sp.innerText = _time;
+        _crw = document.createElement('div');
+        _crw.className = 'chat__remain unread';
+        _cr = document.createElement('div');
+        _cr.className = 'chat__remain-count';
+        _crw.appendChild(_cr)
+        _fwc.append(_sp, _crw)
       }
       _fw.appendChild(_fwc)
     }
