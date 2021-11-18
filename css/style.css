@@ -1,6 +1,7 @@
 @import "./momoTalk.css";
 @import "./chats.css";
 @import "./friend.css";
+
 @font-face {
   font-family: "GyeonggiMedium";
   src: url('../fonts/gyeonggi_medium.otf');
@@ -34,27 +35,18 @@ body.main {
   height: 100%;
   inset: 0;
 }
-body.main.mob{
+
+body.main.mob {
   height: 70%;
   overflow: auto;
 }
-.center {
-  position: absolute;
-  margin: 0;
-  top: 50%;
-  left: 50%;
-  /* margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%); */
-}
 
 #logo.init {
+  position: absolute;
+  margin: 0;
   animation: fadeIn 1s;
   top: 50%;
-  left: 45%;
+  left: calc(50% - 60px);
 }
 
 .contain {
@@ -82,9 +74,11 @@ body.main.mob{
   grid-area: m;
   margin: 50% auto;
 }
-.msg-view.mob{
+
+.msg-view.mob {
   height: 30%;
 }
+
 .msg-view .noti {
   text-align: center;
   font-weight: bolder;

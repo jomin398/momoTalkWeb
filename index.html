@@ -1,94 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>momotalk</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TahirAhmad01/Fontawsome_pro_5.11.2@master/fsm/css/all.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
+    <script src="./src/index.js"></script>
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-  -->
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
-  <title>momotalk</title>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TahirAhmad01/Fontawsome_pro_5.11.2@master/fsm/css/all.css">
-  <link rel="stylesheet" type="text/css" href="./css/style.css">
-
-  <script src="./src/index.js"></script>
 </head>
 
 <body class="init">
-  <div id="init_display">
-    <img id="logo" class="center init" src="./images/logo.png" />
-  </div>
-  <div class="momoTalk main">
-    <div class="header">
-      <a href="">
-        <i class="fas fa-question-square"></i>
-      </a>
+    <div class="init_display">
+        <img id="logo" class="init" src="./images/logo.png" />
     </div>
-    <div class="sidebar-i">
-      <a href="">
-        <i class="fas fa-user"></i>
-      </a>
-      <a href="">
-        <i class="fad fa-comment-alt-dots"></i>
-        <span id="tCount">1</span>
-      </a>
-    </div>
-    <div class="chr-list">
-      <div class="list_header">
-        <div id="unreadCt">안 읽은 메시지</div>
-        <button class="order">최신</button>
-        <button class="order_org">
-          <i class="fa fa-solid fa-bars"></i>
-          <i class="fas fa-long-arrow-alt-down"></i>
-        </button>
-      </div>
-      <hr>
-      <ul class="chr-list_lists">
-        <!--<li class="chats__chat chat">
-          <a href="chat.html">
-            <div class="chats_chatfriend friend friend--lg">
-              <div class="friend__column">
-                <img src="./assets/images/arona.png" class="m-avatar friend__avatar">
-                <div class="friend__content">
-                  <div class="friend__name">
-                    아로나
-                  </div>
-                  <div class="friend__bottom-text">
-                    바쁘네요...
-                  </div>
-                </div>
-              </div>
-              <div class="friend__column">
-                <span class="chat__timestamp">
-                  6:24 PM
-                </span>
-                <div class="chat__remain unread">
-                  <div class="chat__remain-count">
-                    1
-                  </div>
-                </div>
-              </div>
-            </div>
+    <div class="momoTalk main">
+        <div class="header">
+          <a href="">
+            <i class="fas fa-question-square"></i>
           </a>
-        </li>-->
-      </ul>
-    </div>
-    <div class="msg-view">
-      <div class="noti" id="nostu">
-        학생을 선택해주세요.
+        </div>
+        <div class="sidebar-i">
+          <a href="">
+            <i class="fas fa-user"></i>
+          </a>
+          <a href="">
+            <i class="fad fa-comment-alt-dots"></i>
+            <span id="tCount">1</span>
+          </a>
+        </div>
+        <div class="chr-list">
+          <div class="list_header">
+            <div id="unreadCt">안 읽은 메시지</div>
+            <button class="order">최신</button>
+            <button class="order_org">
+              <i class="fa fa-solid fa-bars"></i>
+              <i class="fas fa-long-arrow-alt-down"></i>
+            </button>
+          </div>
+          <hr>
+          <ul class="chr-list_lists">
+            <!--<li class="chats__chat chat">
+              <a href="chat.html">
+                <div class="chats_chatfriend friend friend--lg">
+                  <div class="friend__column">
+                    <img src="./assets/images/arona.png" class="m-avatar friend__avatar">
+                    <div class="friend__content">
+                      <div class="friend__name">
+                        아로나
+                      </div>
+                      <div class="friend__bottom-text">
+                        바쁘네요...
+                      </div>
+                    </div>
+                  </div>
+                  <div class="friend__column">
+                    <span class="chat__timestamp">
+                      6:24 PM
+                    </span>
+                    <div class="chat__remain unread">
+                      <div class="chat__remain-count">
+                        1
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </li>-->
+          </ul>
+        </div>
+        <div class="msg-view">
+          <div class="noti" id="nostu">
+            학생을 선택해주세요.
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  </div>
 </body>
 
 </html>

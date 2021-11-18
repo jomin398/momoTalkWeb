@@ -36,7 +36,7 @@ function momoTalk() {
     });
   };
   momoTalk.prototype.init = function() {
-    document.querySelector('#init_display').remove();
+    document.querySelector('.init_display').remove();
     document.body.className = 'main';
     const continer = document.querySelector('.momoTalk.main');
     this.mainElm = continer;
@@ -89,6 +89,7 @@ function momoTalk() {
         console.log(isNaN(_c[0]));
         console.log(_dirBase + this.people.DB[_c[0]].c+'.png')
         _fci.src =!isNaN(_c[0]) ?_dirBase + this.people.DB[_c[0]].c+'.png':'';
+        _fci.className='m-avatar friend__avatar';
         _fc = document.createElement('div');
         _fc.className = 'friend__content';
 
@@ -104,7 +105,7 @@ function momoTalk() {
 
         _fc.append(_fcn, _fct)
         _fwc.append(_fci, _fc)
-        document.querySelector('.chr-list_lists').appendChild(_fc)
+        
       } else if (i == 2) {
 
       }
@@ -112,6 +113,7 @@ function momoTalk() {
     }
     _e.appendChild(_fw)
     _ew.appendChild(_e)
+    document.querySelector('.chr-list_lists').appendChild(_ew)
   }
   return momoTalk;
 }
