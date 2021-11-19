@@ -2,7 +2,7 @@
     display: none;
     /* display: grid;  */
     grid-template-columns: 0fr 1fr 1.3fr;
-    grid-template-rows: 0.1fr 0.3fr 2.5fr;
+    grid-template-rows: auto 0.3fr 2.5fr;
     gap: 0px 0px;
     grid-template-areas:
         "h h h"
@@ -75,6 +75,8 @@
     grid-area: l;
     background-color: #ececec;
     padding: 5px;
+    z-index: 1;
+    overflow-y: auto;
 }
 
 .momoTalk.main .chr-list_lists {
@@ -91,7 +93,10 @@
 }
 
 .momoTalk.main .chr-list .list_header {
+    display: flex;
     margin: 5px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .list_header a {
@@ -107,20 +112,31 @@
 }
 
 .list_header .right button {
+    position: relative;
     padding: 0 14px;
-    font-size: 11px;
+    font-size: 14px;
     font-weight: bolder;
 }
 
+i.triangle-topright {
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: -1px;
+    right: -1px;
+    border-top: 10px solid skyblue;
+    border-left: 10px solid transparent;
+}
+
 .list_header .right button:nth-child(2) {
-    font-size: 13px;
+    font-size: 16.1px;
 }
 
 .momoTalk.main .list_header .order_org i:nth-child(2) {
     color: #5d668b;
 }
 
-.momoTalk.main .list_header #unreadCt {
+.momoTalk.main .list_header #title {
     color: black;
     font-weight: bolder;
     margin: 5px 0;

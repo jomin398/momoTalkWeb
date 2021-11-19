@@ -1,6 +1,7 @@
 .friend {
   display: flex;
   justify-content: space-between;
+  align-content: space-between;
   align-items: center;
   margin: 5px;
 }

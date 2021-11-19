@@ -32,7 +32,7 @@
   padding-bottom: 20px;
 }
 
-.chats-body .group-avatar {
+.friend__column .group-avatar {
   width: 60px;
   height: 60px;
   display: flex;
