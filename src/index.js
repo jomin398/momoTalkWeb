@@ -18,7 +18,7 @@ function momoTalk() {
   const makeRequest = (method, url, data = {}) => {
     const xhr = new XMLHttpRequest();
     return new Promise(resolve => {
-      xhr.open(method, url, true);
+      xhr.open(method?method:'get', url, true);
       xhr.onload = () => resolve(xhr);
       xhr.onerror = () => resolve(xhr);
       data != {} ? xhr.send(JSON.stringify(data)) : xhr.send();
