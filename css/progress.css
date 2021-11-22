@@ -1,0 +1,35 @@
+.init_display .progress {
+    display: none;
+    margin: 50% auto
+}
+
+.progress #title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+.progress .bsConsoleViewConsole {
+    list-style-type: none;
+    height:20px;
+    font-size: 14px;
+    line-height: 20px;
+    overflow-y: auto;
+}
+
+.progress .bsConsoleItem {
+    font-size: 14px;
+    padding: 0 3px;
+    color: white;
+    float: left
+}
+
+.progress #progress {
+    width: 100%;
+}
+
+.progress #ps {
+    float: right;
+    color: white;
+    font-weight: bolder;
+}

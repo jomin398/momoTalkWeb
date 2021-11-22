@@ -113,9 +113,17 @@
 
 .list_header .right button {
     position: relative;
-    padding: 0 14px;
-    font-size: 14px;
+    /* padding: 0 14px; */
+    font-size: 16x;
     font-weight: bolder;
+}
+
+.list_header .right button:nth-child(1){
+    width: 90px;
+}
+.list_header .right button:nth-child(2) {
+    font-size: 15.1px;
+    padding: 1.5px 14px;
 }
 
 i.triangle-topright {
@@ -126,10 +134,6 @@ i.triangle-topright {
     right: -1px;
     border-top: 10px solid skyblue;
     border-left: 10px solid transparent;
-}
-
-.list_header .right button:nth-child(2) {
-    font-size: 16.1px;
 }
 
 .momoTalk.main .list_header .order_org i:nth-child(2) {
