@@ -15,43 +15,28 @@ function momoTalk() {
     };
     this.moduleName = this.constructor.name;
   }
-  const _fileExists = (url) => {
+  const makeRequest = (method, url, data = {}) => {
+    const xhr = new XMLHttpRequest();
+    return new Promise(resolve => {
+      xhr.open(method, url, true);
+      xhr.onload = () => resolve(xhr);
+      xhr.onerror = () => resolve(xhr);
+      data != {} ? xhr.send(JSON.stringify(data)) : xhr.send();
+    })
+  }
+
+  const _fileExists = async (url) => {
     if (url) {
-      var req = new XMLHttpRequest();
-      req.open('head', url, false);
-      req.send();
-      return req.status === 200;
+      let req = await makeRequest('head', url);
+      return req.readyState == 4;
     } else {
       return false;
     }
   };
-  momoTalk.prototype.reqDB = function(url, method, data) {
-    let xhr = new XMLHttpRequest();
-    xhr.open(method ? method : "GET", url, true);
-    return new Promise(function(resolve, reject) {
-      var s, p, i;
-      if (data && data.constructor == Object) {
-        // serialize object
-        s = "_=" + (new Date).getTime();
-        for (p in data)
-          if (data.hasOwnProperty(p)) {
-            if (!data[p] || data[p].constructor != Array) {
-              data[p] = [data[p]]
-            }
-            for (i = 0; i < data[p].length; i++) {
-              s += "&" + encodeuricomponent(p) + "=" + encodeuricomponent(data[p][i]);
-            }
-          } data = s;
-      }
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-          resolve(xhr);
-        }
-      }
-      xhr.send(data);
-    });
+  momoTalk.prototype.reqDB = function (url, method, data = {}) {
+    return makeRequest(method, url, data);
   };
-  momoTalk.prototype.addLog = function() {
+  momoTalk.prototype.addLog = function () {
     var a = arguments,
       i = 0,
       j = a.length,
@@ -74,34 +59,47 @@ function momoTalk() {
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-  momoTalk.prototype.initChack = async function() {
+  momoTalk.prototype.progressUPdate = function (ps = 0, notAcc) {
+    if (!notAcc) {
+      this.progressElm.value += ps;
+    } else {
+      this.progressElm.value = ps;
+    }
+    _text = this.progressElm.value.toFixed(1) + "%";
+    this.progressElm.innerText = _text;
+    this.progressElm.parentElement.querySelector('#ps').innerText = _text;
+  };
+  momoTalk.prototype.initChack = async function () {
     let self = this;
-    // if (document.querySelector('.init_display')) {
-    //   document.querySelector('.init_display').remove();
-    //   document.body.className = 'main';
-    // }
     document.querySelector('.init_display img#logo').remove();
     document.querySelector('.init_display .progress').style.display = 'block';
     this.progressElm = document.querySelector('.init_display .progress progress');
     this.addLog('initializing......');
     this.addLog('load students...');
-    this.reqDB('./json/students.json').then(xhr => {
-      this.addLog('load students:', xhr.response.length != 0);
-      this.progressElm.value = 10;
-      this.progressElm.innerText = '10%';
+    this.reqDB('./json/students.json').then(async (xhr) => {
       this.people.raw = JSON.parse(xhr.response);
       this.people.DB = this.people.raw.students;
       if (this.people.raw.extra_students) {
         this.people.DB = this.people.DB.concat(this.people.raw.extra_students)
       };
-      this.addLog('load images');
+      this.addLog('concatenate data...');
+      this.progressUPdate(10);
+      await sleep(2000);
+      this.addLog('load students : ', this.people.DB.length);
+      this.addLog('<br>');
+      this.progressUPdate(10)
+
+      _dirBase = './assets/images/';
+      this.addLog('loading images...', 'from ', _dirBase);
       async function imageLoad() {
-        _dirBase = './assets/images/';
         _fails = [];
-        _tval = 70;
+        _tval = 80;
+
+        _pval = (_tval - self.progressElm.value) / self.people.DB.length;
+        console.log(_pval)
         // Sleep in loop
         for (let i = 0, a = self.people.DB, l = a.length; i < l; i++) {
-          await sleep(500);
+          await sleep(200);
           _res = await _fileExists(_dirBase + a[i].c + '.png');
           if (_res) {
             _res = 'loaded ' + a[i].c + '\'s image ';
@@ -109,6 +107,7 @@ function momoTalk() {
             _res = 'load failed ' + a[i].c + '\'s image ';
             _fails.push(_res);
           }
+          self.progressUPdate(_pval);
           self.addLog(_res + '...(' + (i + 1) + '/' + l + ')');
         }
         _text = [
@@ -121,21 +120,31 @@ function momoTalk() {
           '</a>'
         ];
         self.addLog(_text.join(''));
-      }
-      imageLoad();
+        self.progressUPdate(10);
+      };
 
-      /*this.addLog('load lastTalk...');
-      this.reqDB('./json/lasttalk.json').then(xhr => {
-        _data = JSON.parse(xhr.response);
-        this.people.unread = _data;
+      imageLoad().then(() => {
+        this.addLog('<br>');
+        this.addLog('load lastTalk...');
+        this.reqDB('./json/lasttalk.json').then(async (xhr) => {
+          _data = JSON.parse(xhr.response);
+          this.people.unread = _data;
+          this.addLog('load lastTalk... ', '<a id="done">done.</a>');
+          self.progressUPdate(10);
+          _b = self.progressElm.parentElement.querySelector('.bsConsoleViewConsole');
 
-        //this.pageRenderer();
-        // this.initChack();
+          
+          if(_b.classList.contains('view')){
+            _b.classList.remove('view');
+          }
+          _b.scrollTop = _b.scrollHeight -_b.clientHeight;
+          await sleep(1200);
+          this.pageRenderer();
+        });
       });
-      */
     });
   }
-  momoTalk.prototype.pageRenderer = function() {
+  momoTalk.prototype.pageRenderer = function () {
     if (document.querySelector('.init_display')) {
       document.querySelector('.init_display').remove();
       document.body.className = 'main';
@@ -187,10 +196,12 @@ function momoTalk() {
     }
   };
 
-  momoTalk.prototype.init = function() {
+  momoTalk.prototype.init = function () {
+    this.console = document.querySelector('.progress .bsConsoleViewConsole');
+    this.console.onclick = () => this.console.classList.toggle('view');
     this.initChack();
   };
-  momoTalk.prototype.getChrImgPath = function(n) {
+  momoTalk.prototype.getChrImgPath = function (n) {
     let _dirBase = './assets/images/';
     console.log(n)
     return _dirBase + (!isNaN(n) ? this.people.DB[n].c : n) + '.png';
@@ -210,7 +221,7 @@ function momoTalk() {
    * @example
    * document.body.append(genDumyChr(src, name, msg, time, unread));
    */
-  momoTalk.prototype.genDumyChr = function(src, name, msg, time, unread, isGroup, userList) {
+  momoTalk.prototype.genDumyChr = function (src, name, msg, time, unread, isGroup, userList) {
     _ew = document.createElement('li');
     _ew.className = 'chats__chat chat';
     _e = document.createElement('a');
@@ -273,12 +284,12 @@ function momoTalk() {
     return _ew;
   };
 
-  momoTalk.prototype.renderUserLists = function() {
+  momoTalk.prototype.renderUserLists = function () {
     const header_title = this.mainElm.querySelector('.list_header #title');
     this.mainElm.querySelector('.chr-list_lists').innerText = '페이지 건설 중...';
     header_title.innerText += ' (' + this.people.DB.length + ')';
   };
-  momoTalk.prototype.renderRoomLists = function() {
+  momoTalk.prototype.renderRoomLists = function () {
     _base = document.querySelector('.chr-list_lists');
     //in case reload.
     if (_base) {
@@ -338,7 +349,7 @@ function pageInit() {
 }
 
 function pageOnload() {
-  MomoTalk = new(momoTalk());
+  MomoTalk = new (momoTalk());
   MomoTalk.init();
   // pageInit();
 }

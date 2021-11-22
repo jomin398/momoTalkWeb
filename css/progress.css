@@ -1,6 +1,11 @@
+.init_display {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  bottom: 50%;
+}
 .init_display .progress {
   display: none;
-  margin: 50% auto
 }
 
 .progress #title {
@@ -17,6 +22,10 @@
   overflow-y: auto;
 }
 
+.progress .bsConsoleViewConsole.view {
+  height: 16rem;
+}
+
 .progress .bsConsoleItem {
   font-size: 14px;
   padding: 0 3px;
@@ -30,7 +39,7 @@
 }
 
 .bsConsoleItem #warn {
-  color: lightcoral;
+  color: darkred;
   font-weight: bolder;
 }
 

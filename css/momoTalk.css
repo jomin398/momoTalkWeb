@@ -118,9 +118,10 @@
     font-weight: bolder;
 }
 
-.list_header .right button:nth-child(1){
+.list_header .right button:nth-child(1) {
     width: 90px;
 }
+
 .list_header .right button:nth-child(2) {
     font-size: 15.1px;
     padding: 1.5px 14px;
