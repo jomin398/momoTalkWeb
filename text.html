@@ -2,27 +2,41 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>momotalk</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TahirAhmad01/Fontawsome_pro_5.11.2@master/fsm/css/all.css">
-    <!-- <link rel="stylesheet" type="text/css" href="./css/style.css"> -->
-    <link rel="stylesheet" href="./css/test.css">
-    <!-- <script src="./src/index.js"></script> -->
-
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>momotalk</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TahirAhmad01/Fontawsome_pro_5.11.2@master/fsm/css/all.css">
+  <link rel="stylesheet" type="text/css" href="./css/style1.css">
+  <link rel="stylesheet" href="./css/forkme.css" type="text/css">
+  <script src="./src/momoTalk/index1.js"></script>
+  <script src="./src/index.js"></script>
 </head>
-<body class="main">
-    <div class="momotalk-container">
-        <div class="title-container">
-            <span class="title">momoTalk</span>
-            <a href="">
-                <i class="fas fa-question-square"></i>
-            </a>
-        </div>
+
+<body class="init">
+  <!-- add adv on init -->
+  <span id="forkongithub"><a href="https://github.com/jomin398/momoTalkWeb">Fork me on GitHub</a></span>
+  <!-- main display -->
+  <div class="init_display">
+    <img id="logo" class="init" src="./images/logo.png" />
+    <div class="progress">
+      <span id="title">Loading...</span>
+      <div class="bsConsoleViewConsole"></div>
+      <progress id="progress" value="0" max="100"></progress>
+      <span id="ps">0%</span>
+    </div>
+  </div>
+  <div class="momotalk-wrapper">
+    <div class="title-container">
+        <span class="title"></span>
+        <a href="">
+            <i class="fas fa-question-square"></i>
+        </a>
+    </div>
+    <div class="momotalk-content">
         <div class="content-container">
             <div class="left-tab">
-                <a class="tab active">
+                <a class="tab">
                     <i class="fas fa-user"></i>
                 </a>
                 <a class="tab">
@@ -30,36 +44,36 @@
                     <span id="tCount"></span>
                 </a>
             </div>
-            <div class="content-wrapper">
-                <div class="list-container">
-                    <div class="list_header">
-                        <a id="title">안 읽은 메시지</a>
-                        <div class="right">
-                            <button class="order">
-                                <div id="orderText">최신</div>
-                                <i class="triangle-topright"></i>
-                            </button>
-                            <button class="order_org">
-                                <i class="fa fa-solid fa-bars"></i>
-                                <i class="fas fa-long-arrow-alt-up"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <hr>
-                    <ul class="chr-list_lists"></ul>
-                </div>
-                <div class="msg-view">
-                    <div class="noti" id="nostu">
-                        학생을 선택해주세요.
+
+            <div class="room-container">
+                <div class="list_header">
+                    <a id="title">안 읽은 메시지</a>
+                    <div class="right">
+                        <button class="order">
+                            <div id="orderText">최신</div>
+                            <i class="triangle-topright"></i>
+                        </button>
+                        <button class="order_org">
+                            <i class="fa fa-solid fa-bars"></i>
+                            <i class="fas fa-long-arrow-alt-up"></i>
+                        </button>
                     </div>
                 </div>
-                <!-- <div class="input-container">
-                    <input type="text" placeholder="몰?루화할 문장 입력..." autofocus=""><button>몰?루화!</button>
-                </div> -->
+                <hr>
+                <ul class="chr-list_lists"></ul>
             </div>
+            <div class="msg-container">
+                <div class="noti" id="nostu">
+                    학생을 선택해주세요.
+                </div>
+            </div>
+            <!-- <div class="input-container">
+                <input type="text" placeholder="몰?루화할 문장 입력..." autofocus=""><button>몰?루화!</button>
+            </div> -->
         </div>
-        <!-- <img class="container-background-image" src="/mollufier/img/mollu_coconutcorn.0112cd4b..png"> -->
     </div>
+    <!-- <img class="container-background-image" src="/mollufier/img/mollu_coconutcorn.0112cd4b..png"> -->
+</div>
 </body>
 
 </html>

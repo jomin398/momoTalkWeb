@@ -1,0 +1,98 @@
+/* @import "./momoTalk.css"; */
+@import "./momoTalk1.css";
+@import "./progress.css";
+@import "./chats.css";
+@import "./friend.css";
+
+@font-face {
+  font-family: "GyeonggiMedium";
+  src: url('../fonts/gyeonggi_medium.otf');
+}
+
+:root {
+  --stroke-b: -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  --stroke-w: -1px -1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px 1px 0 #fff;
+}
+
+body {
+  padding: 0px;
+  margin: 0px;
+  font: 14px sans-serif;
+}
+
+body.init {
+  background: #fa92a4;
+  background-size: 100% 100%;
+}
+
+body.main {
+  background-color: white;
+  height: 100%;
+}
+
+body.main.mob {
+  height: 70%;
+  overflow: auto;
+}
+
+#logo.init {
+  position: absolute;
+  margin: 0;
+  animation: fadeIn 1s;
+  top: 50%;
+  left: calc(50% - 60px);
+}
+
+.contain {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+}
+
+.stretch {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.msg-view {
+  grid-area: m;
+  margin: 50% auto;
+}
+
+.msg-view.mob {
+  height: 30%;
+}
+
+.msg-view .noti {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 1.2em;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
