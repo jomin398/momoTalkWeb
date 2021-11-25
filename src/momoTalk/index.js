@@ -245,9 +245,104 @@ const momoTalk = function () {
     console.log(n)
     return _dirBase + (!isNaN(n) ? this.people.DB[n].c : n) + '.png';
   }
+
   /**
    * @generator
-   * @description general Chr Chat Item generator
+   * @param {Object} option option of generater;
+   * @param {boolean} option.isGroup is group cheat?
+   * @param {boolean} option.isPF is people profile?
+   * @param {string} option.src string for display chr picture path
+   * @param {string} option.name display chr name 
+   * @param {string} option.msg display chr message
+   * @param {number} option.time utc time to make LocaleTimeString
+   * @param {boolean} option.unread mk unread icon? 
+   * @param {Array} option.userList a user number for rendering groupRoom users
+   * @param {Object} option.music pf music object
+   * @param {string} option.music.tp typeof musicplayer
+   * @param {string} option.music.title display music title
+   * @returns {HTMLElement} dumy HtmlElemant
+   */
+  momoTalk.prototype.genDumyPeople = function (option) {
+    _ew = document.createElement('li');
+    //is people profile?
+    _ew.className = option.isPF ? 'friends__list' : 'chats__chat chat';
+    _e = document.createElement('a');
+    _fw = document.createElement('div');
+    _fw.className = option.isPF ? 'friends__friend friend real-friend' : 'chats_chatfriend friend friend--lg';
+    for (i = 0; i < 2; i++) {
+      _fwc = document.createElement('div');
+      _fwc.className = 'friend__column';
+      //0: left, 1:right; 
+      if (i == 0) {
+        _fci = null;
+        if (!option.isGroup) {
+          _fci = document.createElement('img');
+          _fci.src = option.src;
+          _fci.className = option.isPF ? 'friend__avatar' : 'm-avatar friend__avatar';
+        } else if (option.isGroup) {
+          _fci = document.createElement('div');
+          _fci.className = 'group-avatar';
+          for (j in option.userList) {
+            _avatar = document.createElement('img');
+            _avatar.className = 'group4-avatar friends__avatar';
+            _avatar.src = this.getChrImgPath(option.userList[j])
+
+            _fci.appendChild(_avatar);
+          }
+        }
+        _fc = document.createElement('div');
+        _fc.className = 'friend__content';
+
+        //name
+        _fcn = document.createElement('div');
+        _fcn.className = 'friend__name';
+        _fcn.innerText = option.name;
+
+        //room message
+        _fct = document.createElement('div');
+        _fct.className = option.isPF ? 'friend__status' : 'friend__bottom-text';
+        _fct.innerText = option.msg ? option.msg : '상태 메시지';
+        _fc.append(_fcn, _fct);
+        _fwc.append(_fci, _fc);
+
+      } else if (i == 1) {
+        if (!option.isPF) {
+          _sp = document.createElement('span');
+          _sp.className = 'chat__timestamp';
+          _sp.innerText = new Date(option.time ? option.time : new Date().getTime()).toLocaleTimeString(undefined, { day: "numeric", hour: "numeric", minute: "numeric", hour12: true });
+          _crw = document.createElement('div');
+          _crw.className = 'chat__remain';
+          if (option.unread) {
+            _crw.classList.add('unread');
+            _cr = document.createElement('div');
+            _cr.className = 'chat__remain-count';
+            _cr.innerText = 1;
+            _crw.appendChild(_cr);
+          };
+          _fwc.append(_sp, _crw);
+        } else if (option.isPF) {
+          if (option.music) {
+            _music_wrapper = document.createElement('div');
+            _music_wrapper.className = 'friend__now-listening' + (option.music.tp ? ' ' + option.music.tp : 'melon');
+            _sp = document.createElement('span');
+            _sp.className = 'music-title';
+            _sp.innerText = option.music.title;
+            _music_wrapper.appendChild(_sp)
+            _fwc.append(_music_wrapper);
+          };
+        }
+      }
+      _fw.appendChild(_fwc);
+    }
+    //wrapping for return
+    _e.appendChild(_fw);
+    _ew.appendChild(_e);
+    return _ew;
+  };
+
+  /**
+   * @generator
+   * @description wrapper for genDumyPeople
    * @author jomin398
    * @param {string} src display chr picture path 
    * @param {string} name display chr name
@@ -261,71 +356,42 @@ const momoTalk = function () {
    * document.body.append(genDumyChr(src, name, msg, time, unread));
    */
   momoTalk.prototype.genDumyChr = function (src, name, msg, time, unread, isGroup, userList) {
-    _ew = document.createElement('li');
-    _ew.className = 'chats__chat chat';
-    _e = document.createElement('a');
-    _fw = document.createElement('div');
-    _fw.className = 'chats_chatfriend friend friend--lg';
-    for (i = 0; i < 2; i++) {
-      _fwc = document.createElement('div');
-      _fwc.className = 'friend__column';
-      //0: left, 1:right; 
-      if (i == 0) {
-        _fci = null;
-        if (!isGroup) {
-          _fci = document.createElement('img');
-          _fci.src = src;
-          _fci.className = 'm-avatar friend__avatar';
-        } else if (isGroup) {
-          _fci = document.createElement('div');
-          _fci.className = 'group-avatar';
-          for (j in userList) {
-            _avatar = document.createElement('img');
-            _avatar.className = 'group4-avatar friends__avatar';
-            _avatar.src = this.getChrImgPath(userList[j])
-            _fci.appendChild(_avatar);
-          }
-        }
-        _fc = document.createElement('div');
-        _fc.className = 'friend__content';
-
-        //name
-        _fcn = document.createElement('div');
-        _fcn.className = 'friend__name';
-        _fcn.innerText = name;
-
-        //room message
-        _fct = document.createElement('div');
-        _fct.className = 'friend__bottom-text';
-        _fct.innerText = msg ? msg : '상태 메시지';
-        _fc.append(_fcn, _fct);
-        _fwc.append(_fci, _fc);
-
-      } else if (i == 1) {
-        _sp = document.createElement('span');
-        _sp.className = 'chat__timestamp';
-        _sp.innerText = new Date(time ? time : new Date().getTime()).toLocaleTimeString(undefined, { day: "numeric", hour: "numeric", minute: "numeric", hour12: true });;
-        _crw = document.createElement('div');
-        _crw.className = 'chat__remain';
-        if (unread) {
-          _crw.classList.add('unread');
-          _cr = document.createElement('div');
-          _cr.className = 'chat__remain-count';
-          _cr.innerText = 1;
-          _crw.appendChild(_cr);
-        };
-        _fwc.append(_sp, _crw);
-      }
-      _fw.appendChild(_fwc);
-    }
-    _e.appendChild(_fw);
-    _ew.appendChild(_e);
-    return _ew;
+    return this.genDumyPeople({
+      isGroup: isGroup,
+      src: src,
+      name: name,
+      msg: msg,
+      time: time,
+      unread: unread,
+      userList: userList
+    })
   };
+
   momoTalk.prototype.renderUserLists = function () {
     const header_title = this.mainElm.querySelector('.list_header #title');
-    this.mainElm.querySelector('.chr-list_lists').innerText = '페이지 건설 중...';
+    _base =this.mainElm.querySelector('.chr-list_lists');
+    if (_base) {
+      _base.remove();
+      _base = document.createElement('div');
+      _base.className = 'chr-list_lists';
+      this.mainElm.querySelector('.room-container').appendChild(_base);
+    };
     header_title.innerText += ' (' + this.people.DB.length + ')';
+    if(disableArea.UserLists){
+      _base.innerText = '페이지 건설 중...';
+    }else{
+      console.log(this.people.DB.length);
+      for (let i=0,l=this.people.DB;i<l.length;i++) {
+        _ew = this.genDumyPeople({
+        isGroup:false,
+        isPF:true,
+        src:this.getChrImgPath(l[i].c),
+        name:l[i].n,
+        msg:l[i].s
+        });
+        _base.appendChild(_ew);
+      }
+    }
   };
   momoTalk.prototype.renderRoomLists = function () {
     _base = document.querySelector('.chr-list_lists');

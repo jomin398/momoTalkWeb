@@ -6,7 +6,7 @@
 
 .title-container {
     height: 1rem;
-    color: white;
+    color: #fff;
     font-size: 18px;
     background-color: #fa92a4;
     font-weight: bolder;
@@ -16,18 +16,19 @@
 }
 
 .title-container i {
-    color: white;
+    color: #fff;
     padding-left: 0.3em;
 }
 
 .title-container i.peach {
     transform: rotate(-180deg);
+    color: #fff !important;
 }
 
 .tab-container {
     height: inherit;
     text-align: center;
-    width: fit-content;
+    width: 2em;
     position: absolute;
     font-size: 2em;
     background-color: #5d668b;
@@ -36,9 +37,9 @@
 }
 
 .tab-container .tab {
-    color: white;
+    color: #fff;
     position: relative;
-    padding: 5px 8px;
+    padding: 10px;
     text-decoration: none;
     font-size: 25px;
     /* color: #818181; */
@@ -47,7 +48,7 @@
 }
 
 .tab-container .tab.active {
-    background-color: white;
+    background-color: #fff;
     color: #fa92a4;
 }
 
@@ -59,7 +60,7 @@
     top: 2px;
     right: 0;
     position: absolute;
-    color: white;
+    color: #fff;
     background-color: brown;
 }
 
@@ -68,7 +69,7 @@
 }
 
 .content-container {
-    margin-left: 41px;
+    margin-left: 4em;
     display: flex;
     height: 100%;
     flex-direction: row;
