@@ -12,6 +12,7 @@ const momoTalk = function () {
       page: 0
     };
     this.moduleName = this.constructor.name;
+    this.isdeb = debugMode;
   }
   const makeRequest = (method, url, data = {}) => {
     const xhr = new XMLHttpRequest();
@@ -123,8 +124,7 @@ const momoTalk = function () {
         self.addLog('loaded ' + mka(null, _fails.length == 0));
         self.progressUPdate(10);
       };
-
-      imageLoad().then(() => {
+      let loadchat = () => {
         this.addLog('<br>');
         this.addLog('load lastChat...');
         this.reqDB('./json/lastchat.json').then(async (xhr) => {
@@ -142,7 +142,14 @@ const momoTalk = function () {
           await sleep(1200);
           this.pageRenderer();
         });
-      });
+      }
+      if (this.isdeb) {
+        loadchat();
+      } else {
+        imageLoad().then(() => {
+          loadchat();
+        });
+      }
     });
   }
   momoTalk.prototype.pageRenderer = function () {
@@ -152,9 +159,13 @@ const momoTalk = function () {
     }
 
     if (document.querySelector('.init_display')) {
-      document.querySelector('.init_display').remove();
-      document.body.className = 'main';
+      document.querySelector('.init_display').remove(); 
     }
+    if(document.querySelector('.msg-container.mob')){
+      document.querySelector('.msg-container.mob').remove();
+    }
+
+    document.body.className = 'main';
     const continer = document.querySelector('.momotalk-wrapper');
     const header = document.querySelector('.title-container .title');
     const title = this.moduleName.charAt(0).toUpperCase() + this.moduleName.slice(1);
@@ -162,12 +173,21 @@ const momoTalk = function () {
     const header_order = document.querySelector('.list_header .order #orderText');
 
     this.mainElm = continer;
-    continer.style.display = 'block';
+    continer.style.display = 'inline';
 
     if (!header.innerText.includes(title)) {
       header.insertAdjacentHTML('afterbegin', title);
     }
-
+    if(!continer.querySelector('.msg-container')){
+      let _msgv = document.createElement('div');
+        _msgv.className = 'msg-container';
+        let _noti = document.createElement('div');
+        _noti.className = 'noti';
+        _noti.id = 'nostu';
+        _noti.innerText = '학생을 선택해주세요.';
+        _msgv.appendChild(_noti)
+      continer.querySelector('.content-container').appendChild(_msgv);
+    }
     if (document.body.clientWidth <= 720) {
       console.log(true);
       if (!document.body.classList.contains('mob')) {
@@ -177,7 +197,6 @@ const momoTalk = function () {
         continer.querySelector('.msg-container').remove();
         document.body.append(_msgv);
         _msgv.classList.add('mob');
-        continer.querySelector('.room-container').style.gridColumn = 'span 2';
         document.body.classList.add('mob');
       }
     }
