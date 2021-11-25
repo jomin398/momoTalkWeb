@@ -1,19 +1,11 @@
-.momoTalk.main {
+.momotalk-wrapper {
     display: none;
-    /* display: grid;  */
-    grid-template-columns: 0fr 1fr 1.3fr;
-    grid-template-rows: auto 0.3fr 2.5fr;
-    gap: 0px 0px;
-    grid-template-areas:
-        "h h h"
-        "i l m"
-        "i l m";
-    font-family: "GyeonggiMedium", Arial, Helvetica, sans-serif;
     height: inherit;
+    font-family: "GyeonggiMedium", Arial, Helvetica, sans-serif;
 }
 
-.momoTalk.main .header {
-    grid-area: h;
+.title-container {
+    height: 1rem;
     color: white;
     font-size: 18px;
     background-color: #fa92a4;
@@ -23,25 +15,30 @@
     align-items: center;
 }
 
-.momoTalk.main .header i {
+.title-container i {
     color: white;
     padding-left: 0.3em;
 }
 
-.momoTalk.main .sidebar-i {
+.title-container i.peach {
+    transform: rotate(-180deg);
+}
+
+.tab-container {
+    height: inherit;
     text-align: center;
-    width: 2em;
-    position: relative;
-    grid-area: i;
+    width: fit-content;
+    position: absolute;
     font-size: 2em;
     background-color: #5d668b;
     transition: 0.5s;
+    z-index: 2;
 }
 
-.momoTalk.main .sidebar-i a {
+.tab-container .tab {
     color: white;
     position: relative;
-    padding: 10px 8px;
+    padding: 5px 8px;
     text-decoration: none;
     font-size: 25px;
     /* color: #818181; */
@@ -49,37 +46,44 @@
     transition: 0.3s;
 }
 
-.momoTalk.main .sidebar-i a.select {
+.tab-container .tab.active {
     background-color: white;
     color: #fa92a4;
 }
 
-.momoTalk.main .sidebar-i a:nth-child(1) {
-    margin-top: 2em;
-    margin-bottom: 1em;
-}
-
-.momoTalk.main .sidebar-i span#tCount {
+.tab-container .tab span#tCount {
     display: none;
     font-size: 0.45em;
     border-radius: 5px;
     padding: 0 0.4em;
-    top: 3px;
-    right: 0.7em;
+    top: 2px;
+    right: 0;
     position: absolute;
     color: white;
     background-color: brown;
 }
 
-.momoTalk.main .chr-list {
-    grid-area: l;
+.momotalk-content {
+    height: calc(100% - 36px);
+}
+
+.content-container {
+    margin-left: 41px;
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+}
+
+.room-container {
     background-color: #ececec;
     padding: 5px;
     z-index: 1;
     overflow-y: auto;
+    flex: 50%;
+    min-height: 40%;
 }
 
-.momoTalk.main .chr-list_lists {
+.chr-list_lists {
     margin-bottom: 38px;
     padding: 0px 10px;
     box-sizing: border-box;
@@ -87,12 +91,12 @@
     color: #020202;
 }
 
-.momoTalk.main .chr-list_lists li a {
+.chr-list_lists li a {
     color: #020202;
     text-decoration: none;
 }
 
-.momoTalk.main .chr-list .list_header {
+.list_header {
     display: flex;
     margin: 5px;
     justify-content: space-between;
@@ -107,8 +111,10 @@
 }
 
 .list_header .right {
-    float: right;
-    top: -5px;
+    display: flex;
+
+    /* float: right;
+    top: -5px; */
 }
 
 .list_header .right button {
@@ -119,15 +125,14 @@
 }
 
 .list_header .right button:nth-child(1) {
-    width: 90px;
+    width: 70px;
 }
 
 .list_header .right button:nth-child(2) {
-    font-size: 15.1px;
-    padding: 1.5px 14px;
+    margin-left: 5px;
 }
 
-i.triangle-topright {
+button i.triangle-topright {
     position: absolute;
     width: 0;
     height: 0;
@@ -137,12 +142,30 @@ i.triangle-topright {
     border-left: 10px solid transparent;
 }
 
-.momoTalk.main .list_header .order_org i:nth-child(2) {
+.list_header .order_org i:nth-child(2) {
     color: #5d668b;
 }
 
-.momoTalk.main .list_header #title {
+.list_header #title {
     color: black;
     font-weight: bolder;
     margin: 5px 0;
+}
+
+.msg-container {
+    flex: 50%;
+    padding: 5px;
+    margin: 50% auto;
+}
+
+.msg-container .noti {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 1.2em;
+}
+
+@media (max-width: 750px), (max-height: 450px) {
+    .content-container {
+        flex-direction: column;
+    }
 }

@@ -1,5 +1,5 @@
 let MomoTalk = null;
-const debugMode = true;
+const debugMode = false;
 function pageInit() {
 
 }

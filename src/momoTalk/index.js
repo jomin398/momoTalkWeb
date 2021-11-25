@@ -1,4 +1,4 @@
-const momoTalk = function() {
+const momoTalk = function () {
   function momoTalk() {
     this.mainElm = null;
     this.progressElm = null;
@@ -12,6 +12,7 @@ const momoTalk = function() {
       page: 0
     };
     this.moduleName = this.constructor.name;
+    this.isdeb = debugMode;
   }
   const makeRequest = (method, url, data = {}) => {
     const xhr = new XMLHttpRequest();
@@ -31,10 +32,10 @@ const momoTalk = function() {
       return false;
     }
   };
-  momoTalk.prototype.reqDB = function(url, method, data = {}) {
+  momoTalk.prototype.reqDB = function (url, method, data = {}) {
     return makeRequest(method, url, data);
   };
-  momoTalk.prototype.addLog = function() {
+  momoTalk.prototype.addLog = function () {
     var a = arguments,
       i = 0,
       j = a.length,
@@ -57,7 +58,7 @@ const momoTalk = function() {
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-  momoTalk.prototype.progressUPdate = function(ps = 0, notAcc) {
+  momoTalk.prototype.progressUPdate = function (ps = 0, notAcc) {
     if (!notAcc) {
       this.progressElm.value += ps;
     } else {
@@ -67,7 +68,7 @@ const momoTalk = function() {
     this.progressElm.innerText = _text;
     this.progressElm.parentElement.querySelector('#ps').innerText = _text;
   };
-  momoTalk.prototype.initChack = async function() {
+  momoTalk.prototype.initChack = async function () {
     let self = this;
     document.querySelector('.init_display img#logo').remove();
     document.querySelector('.init_display .progress').style.display = 'block';
@@ -97,12 +98,12 @@ const momoTalk = function() {
         console.log(_pval);
         const mka = (msg, bool) => {
           let t = [
-          '<a id="',
-          bool ? 'done' : 'warn',
-          '">',
-          msg ? msg : (bool ? 'done.' : 'failed.'),
-          '</a>'
-        ];
+            '<a id="',
+            bool ? 'done' : 'warn',
+            '">',
+            msg ? msg : (bool ? 'done.' : 'failed.'),
+            '</a>'
+          ];
           return t.join('');
         }
         // Sleep in loop
@@ -123,8 +124,7 @@ const momoTalk = function() {
         self.addLog('loaded ' + mka(null, _fails.length == 0));
         self.progressUPdate(10);
       };
-
-      imageLoad().then(() => {
+      let loadchat = () => {
         this.addLog('<br>');
         this.addLog('load lastChat...');
         this.reqDB('./json/lastchat.json').then(async (xhr) => {
@@ -142,55 +142,85 @@ const momoTalk = function() {
           await sleep(1200);
           this.pageRenderer();
         });
-      });
+      }
+      if (this.isdeb) {
+        loadchat();
+      } else {
+        imageLoad().then(() => {
+          loadchat();
+        });
+      }
     });
   }
-  momoTalk.prototype.pageRenderer = function() {
+
+  momoTalk.prototype.countUnread = function () {
+    _countTotal = 0;
+    if (this.people.unread) {
+      this.people.unread.forEach((e, i) => {
+        _countTotal += e[2].length;
+      });
+    }
+    return _countTotal;
+  }
+
+  momoTalk.prototype.pageRenderer = function () {
     //remove ad...
     if (document.getElementById('forkongithub')) {
       document.getElementById('forkongithub').remove();
     }
-    
+
     if (document.querySelector('.init_display')) {
       document.querySelector('.init_display').remove();
-      document.body.className = 'main';
     }
-    const continer = document.querySelector('.momoTalk.main');
-    const header = document.querySelector('.momoTalk.main .header');
+    if (document.querySelector('.msg-container.mob')) {
+      document.querySelector('.msg-container.mob').remove();
+    }
+
+    document.body.className = 'main';
+    const continer = document.querySelector('.momotalk-wrapper');
+    const header = document.querySelector('.title-container .title');
     const title = this.moduleName.charAt(0).toUpperCase() + this.moduleName.slice(1);
     const header_title = document.querySelector('.list_header #title');
     const header_order = document.querySelector('.list_header .order #orderText');
 
     this.mainElm = continer;
-    continer.style.display = 'grid';
+    continer.style.display = 'inline';
 
-    if (!header.innerText.includes(title)) {
-      header.insertAdjacentHTML('afterbegin', title);
+    // if (!header.innerText.includes(title)) {
+    header.innerHTML = title;
+    //}
+    if (!continer.querySelector('.msg-container')) {
+      let _msgv = document.createElement('div');
+      _msgv.className = 'msg-container';
+      let _noti = document.createElement('div');
+      _noti.className = 'noti';
+      _noti.id = 'nostu';
+      _noti.innerText = '학생을 선택해주세요.';
+      _msgv.appendChild(_noti)
+      continer.querySelector('.content-container').appendChild(_msgv);
     }
-
     if (document.body.clientWidth <= 720) {
       console.log(true);
       if (!document.body.classList.contains('mob')) {
         let _msgv = document.createElement('div');
-        _msgv.className = 'msg-view';
-        _msgv.innerHTML = continer.querySelector('.msg-view').innerHTML;
-        continer.querySelector('.msg-view').remove();
+        _msgv.className = 'msg-container';
+        _msgv.innerHTML = continer.querySelector('.msg-container').innerHTML;
+        continer.querySelector('.msg-container').remove();
         document.body.append(_msgv);
         _msgv.classList.add('mob');
-        continer.querySelector('.chr-list').style.gridColumn = 'span 2';
         document.body.classList.add('mob');
       }
     }
 
-    continer.querySelectorAll('.sidebar-i a').forEach((a, i) => {
-      a.className = '';
+    continer.querySelectorAll('.tab-container a').forEach((a, i) => {
+      a.className = 'tab';
       a.onclick = () => {
         this.user.page = i;
         this.pageRenderer();
       }
     });
 
-    continer.querySelector('.sidebar-i a:nth-child(' + (this.user.page + 1) + ')').className = 'select';
+    continer.querySelector('.tab-container a:nth-child(' + (this.user.page + 1) + ')').classList.add('active');
     if (this.user.page == 0) {
       header_title.innerText = '학생';
       header_order.innerText = '이름';
@@ -200,14 +230,17 @@ const momoTalk = function() {
       header_order.innerText = '최신';
       this.renderRoomLists();
     }
+    let el = this.mainElm.querySelector('.tab-container span#tCount');
+    el.style.display = 'block';
+    el.innerText = this.countUnread();
   };
 
-  momoTalk.prototype.init = function() {
+  momoTalk.prototype.init = function () {
     this.console = document.querySelector('.progress .bsConsoleViewConsole');
     this.console.onclick = () => this.console.classList.toggle('view');
     this.initChack();
   };
-  momoTalk.prototype.getChrImgPath = function(n) {
+  momoTalk.prototype.getChrImgPath = function (n) {
     let _dirBase = './assets/images/';
     console.log(n)
     return _dirBase + (!isNaN(n) ? this.people.DB[n].c : n) + '.png';
@@ -227,7 +260,7 @@ const momoTalk = function() {
    * @example
    * document.body.append(genDumyChr(src, name, msg, time, unread));
    */
-  momoTalk.prototype.genDumyChr = function(src, name, msg, time, unread, isGroup, userList) {
+  momoTalk.prototype.genDumyChr = function (src, name, msg, time, unread, isGroup, userList) {
     _ew = document.createElement('li');
     _ew.className = 'chats__chat chat';
     _e = document.createElement('a');
@@ -289,32 +322,22 @@ const momoTalk = function() {
     _ew.appendChild(_e);
     return _ew;
   };
-
-  momoTalk.prototype.renderUserLists = function() {
+  momoTalk.prototype.renderUserLists = function () {
     const header_title = this.mainElm.querySelector('.list_header #title');
     this.mainElm.querySelector('.chr-list_lists').innerText = '페이지 건설 중...';
     header_title.innerText += ' (' + this.people.DB.length + ')';
   };
-  momoTalk.prototype.renderRoomLists = function() {
+  momoTalk.prototype.renderRoomLists = function () {
     _base = document.querySelector('.chr-list_lists');
     //in case reload.
     if (_base) {
       _base.remove();
       _base = document.createElement('div');
       _base.className = 'chr-list_lists';
-      this.mainElm.querySelector('.chr-list').appendChild(_base);
+      this.mainElm.querySelector('.room-container').appendChild(_base);
     };
-    _countTotal = 0;
-    if (this.people.unread) {
-      this.people.unread.forEach((e, i) => {
-        _countTotal += e[2].length;
-      });
-      let el = this.mainElm.querySelector('.sidebar-i span#tCount');
-      el.style.display = 'block';
-      el.innerText = _countTotal;
-      el = this.mainElm.querySelector('.chr-list .list_header #title');
-      el.innerText += ' (' + _countTotal + ')';
-    }
+    let el = this.mainElm.querySelector('.room-container .list_header #title');
+    el.innerText += ' (' + this.countUnread() + ')';
     console.log(this.people.DB.length);
     for (let i in this.people.unread) {
       _c = this.people.unread[i];
