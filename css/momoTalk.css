@@ -46,6 +46,9 @@
     display: block;
     transition: 0.3s;
 }
+.tab-container .tab i:nth-child(3){
+    color: #ffffffb5;
+}
 
 .tab-container .tab.active {
     background-color: #fff;
