@@ -162,7 +162,6 @@ const momoTalk = function () {
     }
     return _countTotal;
   }
-
   momoTalk.prototype.pageRenderer = function () {
     //remove ad...
     if (document.getElementById('forkongithub')) {
@@ -175,20 +174,21 @@ const momoTalk = function () {
     if (document.querySelector('.msg-container.mob')) {
       document.querySelector('.msg-container.mob').remove();
     }
-
     document.body.className = 'main';
     const continer = document.querySelector('.momotalk-wrapper');
     const header = document.querySelector('.title-container .title');
     const title = this.moduleName.charAt(0).toUpperCase() + this.moduleName.slice(1);
-    const header_title = document.querySelector('.list_header #title');
-    const header_order = document.querySelector('.list_header .order #orderText');
+    let header_title = null, header_order = null;
 
     this.mainElm = continer;
     continer.style.display = 'inline';
-
-    // if (!header.innerText.includes(title)) {
     header.innerHTML = title;
-    //}
+
+    if (continer.querySelector('.construction')) {
+      continer.querySelector('.construction').remove();
+      continer.querySelector('.chr-list_lists').style.display = 'block';
+    }
+
     if (!continer.querySelector('.msg-container')) {
       let _msgv = document.createElement('div');
       _msgv.className = 'msg-container';
@@ -221,14 +221,52 @@ const momoTalk = function () {
     });
 
     continer.querySelector('.tab-container a:nth-child(' + (this.user.page + 1) + ')').classList.add('active');
-    if (this.user.page == 0) {
-      header_title.innerText = '학생';
-      header_order.innerText = '이름';
-      this.renderUserLists();
-    } else if (this.user.page == 1) {
-      header_title.innerText = '안 읽은 메시지';
-      header_order.innerText = '최신';
-      this.renderRoomLists();
+    const genRightTab = () => {
+      if (!document.querySelector('.list_header .right')) {
+        let r = document.createElement('div');
+        r.className = 'right';
+        for (i = 0; i < 2; i++) {
+          let b = document.createElement('button');
+          b.className = i == 0 ? 'order' : 'order_org';
+
+          for (let j = 0; j < 2; j++) {
+            let l = ['triangle-topright', 'fa fa-solid fa-bars', 'fas fa-long-arrow-alt-up'];
+            let e = document.createElement(i == 0 & j == 0 ? 'div' : 'i');
+            if (i == 0 & j == 0) {
+              e.id = 'orderText';
+              e.innerText = ' ';
+            } else {
+              e.className = i == 0 & j == 1 ? l[j - 1] : l[j + 1];
+            }
+            b.appendChild(e);
+          }
+
+          r.appendChild(b);
+        }
+        document.querySelector('.list_header').appendChild(r);
+      }
+    };
+    genRightTab();
+    header_title = document.querySelector('.list_header #title');
+    header_order = document.querySelector('.list_header .order #orderText');
+    switch (this.user.page) {
+      case 0:
+        header_title.innerText = '학생';
+        header_order.innerText = '이름';
+        this.renderUserLists();
+        break;
+      case 1:
+        header_title.innerText = '안 읽은 메시지';
+        header_order.innerText = '최신';
+        this.renderRoomLists();
+        break;
+      case 2:
+        header_title.innerText = '설정';
+        this.renderSetupPage();
+        break;
+      default:
+        location.reload();
+        break;
     }
     let el = this.mainElm.querySelector('.tab-container span#tCount');
     el.style.display = 'block';
@@ -341,52 +379,44 @@ const momoTalk = function () {
   };
 
   /**
-   * @generator
-   * @description wrapper for genDumyPeople
-   * @author jomin398
-   * @param {string} src display chr picture path 
-   * @param {string} name display chr name
-   * @param {string} msg display chr message
-   * @param {number} time utc time to make LocaleTimeString
-   * @param {boolean} unread mk unread icon? 
-   * @param {boolean} isGroup is groupRoom?
-   * @param {array} userList for rendering groupRoom users
-   * @returns {HTMLElement} dumy HtmlElemant
-   * @example
-   * document.body.append(genDumyChr(src, name, msg, time, unread));
-   */
-  momoTalk.prototype.genDumyChr = function (src, name, msg, time, unread, isGroup, userList) {
-    return this.genDumyPeople({
-      isGroup: isGroup,
-      src: src,
-      name: name,
-      msg: msg,
-      time: time,
-      unread: unread,
-      userList: userList
-    })
-  };
-  /**
-   * 
+   * @description user Sort function
    * @param {Object} option sort for rendering
    * @param {Array} option.arr array to sort;
-   * @param {string} option.t 0 for name, 1 for lv.
+   * @param {(string|number)} option.t selct object
    * @param {number} option.n 0 for up, 1 for down.
    * @returns {Array} sorted array.
    */
-  momoTalk.prototype.sorter = function(option){
-    let c=null,f=null;
-    option.t? option.t:option.t=0;
-    option.n? option.n:option.n=0;
+  momoTalk.prototype.userSorter = function (option) {
+    let c = null, f = null;
+    option.n ? option.n : option.n = 0;
 
-    if (option.n==0) {
-      c = (x,y)=>x < y ? -1 : x > y ? 1 : 0;
+    if (option.n == 0) {
+      c = (x, y) => x < y ? -1 : x > y ? 1 : 0;
     } else if (option.n == 1) {
-      c = (x,y)=>x > y ? -1 : x < y ? 1 : 0;
+      c = (x, y) => x > y ? -1 : x < y ? 1 : 0;
     }
-    f = (a,b)=>c(a[option.t],b[option.t]);
-    return option.arr.sort((a,b)=>f(a,b));
-  }
+    f = (a, b) => c(a[option.t], b[option.t]);
+    return option.arr.sort((a, b) => f(a, b));
+  };
+
+  momoTalk.prototype.displayErrorPage = function () {
+    _base = this.mainElm.querySelector('.chr-list_lists');
+    _base.style.display = 'none';
+    _constarea = document.createElement('div');
+    _constarea.className = 'construction';
+    _t = document.createElement('span');
+    _t.id = 'top';
+    _t.innerText = '페이지 건설 중...';
+    _imgwrap = document.createElement('div');
+    _imgwrap.style.textAlign = 'center';
+    _img = document.createElement('img');
+    _img.className = 'area_const';
+
+    _img.src = './assets/icons/emojis/Popup_Image_Arona.png';
+    _imgwrap.appendChild(_img);
+    _constarea.append(_t, _imgwrap);
+    document.querySelector('.room-container').append(_constarea)
+  };
   momoTalk.prototype.renderUserLists = function (sortOption) {
     const header_title = this.mainElm.querySelector('.list_header #title');
     _base = this.mainElm.querySelector('.chr-list_lists');
@@ -399,11 +429,11 @@ const momoTalk = function () {
     let data = this.people.DB;
     header_title.innerText += ' (' + data.length + ')';
     if (disableArea.UserLists) {
-      _base.innerText = '페이지 건설 중...';
+      this.displayErrorPage();
     } else {
       console.log(data.length);
       if (sortOption) {
-        data = this.sorter(Object.assign({arr:data},sortOption))
+        data = this.userSorter(Object.assign({ arr: data }, sortOption))
       }
       for (let i = 0, l = data; i < l.length; i++) {
         _ew = this.genDumyPeople({
@@ -455,9 +485,27 @@ const momoTalk = function () {
 
       console.log(_src)
 
-      _ew = this.genDumyChr(_src, _name, _msg.m, _time, true, _isGroup, _c[0]);
+      _ew = this.genDumyPeople({
+        isGroup: _isGroup,
+        src: _src,
+        name: _name,
+        msg: _msg.m,
+        time: _time,
+        unread: true,
+        userList: _c[0]
+      });
       _ew.querySelector('.chat__remain-count').innerText = _count;
       document.querySelector('.chr-list_lists').appendChild(_ew);
+    }
+  };
+  momoTalk.prototype.renderSetupPage = function () {
+    const header_title = this.mainElm.querySelector('.list_header #title');
+    _base = this.mainElm.querySelector('.chr-list_lists');
+    this.mainElm.querySelector('.list_header .right').remove();
+    if (disableArea.setupPage) {
+      this.displayErrorPage();
+    } else {
+
     }
   }
   return momoTalk;

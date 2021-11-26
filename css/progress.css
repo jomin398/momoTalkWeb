@@ -4,6 +4,7 @@
   width: 100%;
   bottom: 50%;
 }
+
 .init_display .progress {
   display: none;
 }
@@ -45,6 +46,23 @@
 
 .progress #progress {
   width: 100%;
+  color: white;
+  background-color: #d4a6ae;
+}
+
+/* background: */
+progress::-webkit-progress-bar {
+  background-color: #d4a6ae;
+  width: 100%;
+}
+
+/* value: */
+progress::-webkit-progress-value {
+  background-color: white !important;
+}
+
+progress::-moz-progress-bar {
+  background-color: white !important;
 }
 
 .progress #ps {
