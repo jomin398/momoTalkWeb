@@ -366,28 +366,52 @@ const momoTalk = function () {
       userList: userList
     })
   };
+  /**
+   * 
+   * @param {Object} option sort for rendering
+   * @param {Array} option.arr array to sort;
+   * @param {string} option.t 0 for name, 1 for lv.
+   * @param {number} option.n 0 for up, 1 for down.
+   * @returns {Array} sorted array.
+   */
+  momoTalk.prototype.sorter = function(option){
+    let c=null,f=null;
+    option.t? option.t:option.t=0;
+    option.n? option.n:option.n=0;
 
-  momoTalk.prototype.renderUserLists = function () {
+    if (option.n==0) {
+      c = (x,y)=>x < y ? -1 : x > y ? 1 : 0;
+    } else if (option.n == 1) {
+      c = (x,y)=>x > y ? -1 : x < y ? 1 : 0;
+    }
+    f = (a,b)=>c(a[option.t],b[option.t]);
+    return option.arr.sort((a,b)=>f(a,b));
+  }
+  momoTalk.prototype.renderUserLists = function (sortOption) {
     const header_title = this.mainElm.querySelector('.list_header #title');
-    _base =this.mainElm.querySelector('.chr-list_lists');
+    _base = this.mainElm.querySelector('.chr-list_lists');
     if (_base) {
       _base.remove();
       _base = document.createElement('div');
       _base.className = 'chr-list_lists';
       this.mainElm.querySelector('.room-container').appendChild(_base);
     };
-    header_title.innerText += ' (' + this.people.DB.length + ')';
-    if(disableArea.UserLists){
+    let data = this.people.DB;
+    header_title.innerText += ' (' + data.length + ')';
+    if (disableArea.UserLists) {
       _base.innerText = '페이지 건설 중...';
-    }else{
-      console.log(this.people.DB.length);
-      for (let i=0,l=this.people.DB;i<l.length;i++) {
+    } else {
+      console.log(data.length);
+      if (sortOption) {
+        data = this.sorter(Object.assign({arr:data},sortOption))
+      }
+      for (let i = 0, l = data; i < l.length; i++) {
         _ew = this.genDumyPeople({
-        isGroup:false,
-        isPF:true,
-        src:this.getChrImgPath(l[i].c),
-        name:l[i].n,
-        msg:l[i].s
+          isGroup: false,
+          isPF: true,
+          src: this.getChrImgPath(l[i].c),
+          name: l[i].n,
+          msg: l[i].s
         });
         _base.appendChild(_ew);
       }
