@@ -35,25 +35,7 @@ const momoTalk = function () {
   momoTalk.prototype.reqDB = function (url, method, data = {}) {
     return makeRequest(method, url, data);
   };
-  momoTalk.prototype.addLog = function () {
-    var a = arguments,
-      i = 0,
-      j = a.length,
-      item, v;
-    const b = document.querySelector('.bsConsoleViewConsole');
-    temp = document.createElement('div');
-    item = ['<div style="clear:both">'];
-    while (i < j) {
-      v = a[i++];
-      if (v && typeof v == 'object') v = JSON.stringify(v);
-      item.push('<div class="bsConsoleItem">' + v + '</div>');
-    }
-    item.push('</div>');
-    temp.innerHTML = item.join('');
-    b.appendChild(temp.childNodes[0]);
-    console.log(...arguments);
-    b.scrollTop = b.scrollHeight - b.clientHeight;
-  };
+  momoTalk.prototype.mConsole = mConsole;
 
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -73,66 +55,70 @@ const momoTalk = function () {
     document.querySelector('.init_display img#logo').remove();
     document.querySelector('.init_display .progress').style.display = 'block';
     this.progressElm = document.querySelector('.init_display .progress progress');
-    this.addLog('initializing......');
-    this.addLog('load students...');
+    this.mConsole.l('initializing.');
+    this.mConsole.l('initializing...');
+    this.mConsole.l('initializing......');
+    this.mConsole.l('initializing..........', '%cdone', 'color:#adff2f;');
+
+    this.mConsole.l('load students...');
     this.reqDB('./json/students.json').then(async (xhr) => {
       this.people.raw = JSON.parse(xhr.response);
       this.people.DB = this.people.raw.students;
       if (this.people.raw.extra_students) {
         this.people.DB = this.people.DB.concat(this.people.raw.extra_students)
       };
-      this.addLog('concatenate data...');
+      this.mConsole.l('concatenate data...');
       this.progressUPdate(10);
       await sleep(2000);
-      this.addLog('load students : ', this.people.DB.length);
-      this.addLog('<br>');
+      this.mConsole.l('load students : ', this.people.DB.length);
+      this.mConsole.l('<br>');
       this.progressUPdate(10)
 
       _dirBase = './assets/images/';
-      this.addLog('loading images...', 'from ', _dirBase);
+      this.mConsole.l('loading images...', 'from ', _dirBase);
       async function imageLoad() {
         _fails = [];
         _tval = 80;
 
         _pval = (_tval - self.progressElm.value) / self.people.DB.length;
         console.log(_pval);
-        const mka = (msg, bool) => {
-          let t = [
-            '<a id="',
-            bool ? 'done' : 'warn',
-            '">',
-            msg ? msg : (bool ? 'done.' : 'failed.'),
-            '</a>'
-          ];
-          return t.join('');
-        }
         // Sleep in loop
         for (let i = 0, a = self.people.DB, l = a.length; i < l; i++) {
           await sleep(200);
           _n = a[i].c;
           _t = 'loading ' + _n + '\'s image...';
-          self.addLog(_t);
+          self.mConsole.l(_t);
           _res = await _fileExists(_dirBase + _n + '.png');
           if (!_res) {
             _fails.push(_res);
-          }
-          _res = _t + mka(null, _res);
+          };
           self.progressUPdate(_pval);
-          self.addLog(_res + ' ...(' + (i + 1) + '/' + l + ')');
+          arr = [_t, '%c%s',
+            'font-weight:bolder; color:' + (_res ? '#adff2f;' : '#8b0000;'),
+            (_res ? 'done.' : 'failed.'),
+            ' ...(' + (i + 1) + '/' + l + ')'
+          ];
+          self.mConsole.l.apply(null, arr);
         }
+        _bool = _fails.length == 0;
 
-        self.addLog('loaded ' + mka(null, _fails.length == 0));
+        arr = ['loaded ',
+          '%c%s',
+          'font-weight:bolder; color:' + (_bool ? '#adff2f;' : '#8b0000;'),
+          _bool ? 'done.' : 'failed.'
+        ];
+        self.mConsole.l.apply(null, arr);
         self.progressUPdate(10);
       };
       let loadchat = () => {
-        this.addLog('<br>');
-        this.addLog('load lastChat...');
+        this.mConsole.l('<br>');
+        this.mConsole.l('load lastChat...');
         this.reqDB('./json/lastchat.json').then(async (xhr) => {
           _data = JSON.parse(xhr.response);
           this.people.unread = _data;
-          this.addLog('load lastChat... ', '<a id="done">done.</a>');
+          this.mConsole.l('load lastChat... ', '%c%s', 'color:#adff2f', 'done');
           self.progressUPdate(10);
-          _b = self.progressElm.parentElement.querySelector('.bsConsoleViewConsole');
+          _b = self.progressElm.parentElement.querySelector('.mConsole');
 
 
           if (_b.classList.contains('view')) {
@@ -274,7 +260,7 @@ const momoTalk = function () {
   };
 
   momoTalk.prototype.init = function () {
-    this.console = document.querySelector('.progress .bsConsoleViewConsole');
+    this.console = document.querySelector('.progress .mConsole');
     this.console.onclick = () => this.console.classList.toggle('view');
     this.initChack();
   };

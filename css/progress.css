@@ -15,7 +15,7 @@
   font-weight: bolder;
 }
 
-.progress .bsConsoleViewConsole {
+.progress .mConsole {
   list-style-type: none;
   height: 20px;
   font-size: 14px;
@@ -23,27 +23,16 @@
   overflow-y: auto;
 }
 
-.progress .bsConsoleViewConsole.view {
+.progress .mConsole.view {
   height: 16rem;
 }
 
-.progress .bsConsoleItem {
+.progress .mConsole.item {
   font-size: 14px;
   padding: 0 3px;
   color: white;
   float: left
 }
-
-.bsConsoleItem #done {
-  color: greenyellow;
-  font-weight: bolder;
-}
-
-.bsConsoleItem #warn {
-  color: darkred;
-  font-weight: bolder;
-}
-
 .progress #progress {
   width: 100%;
   color: white;
