@@ -39,12 +39,12 @@
   margin-right: 15px;
 }
 
-.friend__content > .friend__name {
+.friend__content>.friend__name {
   display: block;
   margin-bottom: 5px;
 }
 
-.friend__content > .friend__group {
+.friend__content>.friend__group {
   margin-bottom: 5px;
 }
 
@@ -63,9 +63,11 @@
 .friend .chat__timestamp {
   font-size: 12px;
 }
-.friend .chat__timestamp{
+
+.friend .chat__timestamp {
   text-align: center;
 }
+
 .chat .friend__column:last-child {
   height: 40px;
   display: flex;
@@ -93,17 +95,38 @@
 .friend .friend__now-listening {
   padding: 5px 10px;
   border-radius: 15px;
-  border: 2px solid #52e084;
   font-size: 14px;
 }
 
 .friend__now-listening span {
   opacity: 0.7;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .friend__now-listening i {
   font-size: 12px;
+  margin-left: 5px;
 }
+
+.friend .friend__now-listening.melon {
+  border: 2px solid #52e084;
+}
+
+.friend__now-listening.melon i {
+  color: #52e084;
+}
+
+.friend .friend__now-listening.yt {
+  border: 2px solid #d4a6ae;
+}
+
+.friend__now-listening.yt i {
+  color: #d4a6ae;
+}
+
+
 
 .friend__add-btn {
   padding: 10px 15px;

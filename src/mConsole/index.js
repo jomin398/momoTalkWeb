@@ -5,6 +5,9 @@
    */
   const mConsole = (function() {
     let body = null;
+    /**
+     * @property {boolean} update set update log? default:true;
+     */
     let update = true;
     const init = () => {
       body = document.querySelector('.mConsole');
@@ -15,15 +18,6 @@
         body.innerHTML = '';
       }
     }
-
-    /**
-     * @alias overWrite
-     * @param {boolean} b set true to not update.
-     * @memberof mConsole
-     */
-    const o = (b) => {
-      update = !b
-    };
     /**
      * @generator
      * @memberof mConsole
@@ -73,5 +67,5 @@
       }
       console.log(r.join(''))
     };
-    return { log, l: log, clear, c: clear, o,overWrite:o};
+    return { log, l: log, clear, c: clear, update};
   })();

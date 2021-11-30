@@ -12,7 +12,7 @@ inspired by **MomoTalk**[^1] and **KakaoTalk**[^2]
 - [ ] clickable students on student list.
 - [ ] Adding students' profile data to [student.json](./json/students.json)
 - [ ] viewable student profile.
-- [ ] add student's ex-info and make it clickable.
+- [x] add student's ex-info and make it clickable. (display a Song)
 - [x] rendering lastChat on lastChat list.
 - [ ] clickable lastChat, rendering the chosen lastChat.
 - [ ] make sortable lastChat list.

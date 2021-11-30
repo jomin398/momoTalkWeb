@@ -23,6 +23,19 @@
   overflow-y: auto;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.mConsole::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.mConsole {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
 .progress .mConsole.view {
   height: 16rem;
 }
@@ -33,6 +46,7 @@
   color: white;
   float: left
 }
+
 .progress #progress {
   width: 100%;
   color: white;

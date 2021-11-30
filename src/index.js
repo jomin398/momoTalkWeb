@@ -1,5 +1,5 @@
 let MomoTalk = null;
-const debugMode = false;
+const debugMode = true;
 const disableArea = {
   setupPage:true
 }

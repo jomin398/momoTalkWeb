@@ -3,7 +3,12 @@
         {
             "n": "아로나",
             "c": "arona",
-            "s": "기다리고 있을게요, 선생님"
+            "s": "기다리고 있을게요, 선생님",
+            "m":{
+                "tp":"yt",
+                "t":"BlueArchive Mein Theme",
+                "l":"https://www.youtube.com/watch?v=p7ZRQ0BxtMM"
+            }
         },
         {
             "n": "네루",
@@ -238,12 +243,22 @@
         {
             "n":"루시",
             "c":"lucy",
-            "s":"주인님이 좋아요.."
+            "s":"주인님이 좋아요..",
+            "m":{
+                "tp":"yt",
+                "t":"Lucy's Title Song",
+                "l":"https://youtu.be/FivrPBROMp4"
+            }
         },
         {
             "n": "사이코",
             "c": "saiko",
-            "s":"최고!"
+            "s":"최고!",
+            "m":{
+                "tp":"yt",
+                "t":"One Room Sugar Life",
+                "l":"https://youtu.be/IYzNU9V3aCk"
+            }
         }
     ]
 }

@@ -71,11 +71,15 @@ const momoTalk = function() {
     document.querySelector('.init_display img#logo').remove();
     document.querySelector('.init_display .progress').style.display = 'block';
     this.progressElm = document.querySelector('.init_display .progress progress');
+    this.mConsole.update = false;
     this.mConsole.l('initializing.');
+    await sleep(1000);
     this.mConsole.l('initializing...');
+    await sleep(1000);
     this.mConsole.l('initializing......');
+    await sleep(4000);
     this.mConsole.l('initializing..........', '%cdone', 'color:#adff2f;');
-
+    this.mConsole.update = true;
     this.mConsole.l('load students...');
     this.reqDB('./json/students.json').then(async (xhr) => {
       this.people.raw = JSON.parse(xhr.response);
@@ -355,12 +359,16 @@ const momoTalk = function() {
           _fwc.append(_sp, _crw);
         } else if (option.isPF) {
           if (option.music) {
-            _music_wrapper = document.createElement('div');
-            _music_wrapper.className = 'friend__now-listening' + (option.music.tp ? ' ' + option.music.tp : 'melon');
+            _music_wrapper = document.createElement('a');
+            _music_wrapper.href = option.music.l;
+            _music_wrapper.target = '_blank';
+            _music_wrapper.className = 'friend__now-listening ' + (option.music.tp ?option.music.tp : 'melon');
             _sp = document.createElement('span');
             _sp.className = 'music-title';
-            _sp.innerText = option.music.title;
-            _music_wrapper.appendChild(_sp)
+            _sp.innerText = option.music.t;
+            _i = document.createElement('i');
+            _i.className = 'far fa-play';
+            _music_wrapper.append(_sp,_i)
             _fwc.append(_music_wrapper);
           };
         }
@@ -437,7 +445,8 @@ const momoTalk = function() {
           isPF: true,
           src: this.getChrImgPath(l[i].c),
           name: l[i].n,
-          msg: l[i].s
+          msg: l[i].s,
+          music:l[i].m,
         });
         _base.appendChild(_ew);
       }
