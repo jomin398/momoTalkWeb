@@ -1,4 +1,4 @@
-const momoTalk = function () {
+const momoTalk = function() {
   function momoTalk() {
     this.mainElm = null;
     this.progressElm = null;
@@ -32,15 +32,31 @@ const momoTalk = function () {
       return false;
     }
   };
-  momoTalk.prototype.reqDB = function (url, method, data = {}) {
+  momoTalk.prototype.reqDB = function(url, method, data = {}) {
     return makeRequest(method, url, data);
   };
   momoTalk.prototype.mConsole = mConsole;
 
+  /**
+   * @generator
+   * @alias mkBooleanLog
+   * @param {string} m message
+   * @param {boolean} b boolean to toggle
+   */
+  momoTalk.prototype.mkBooLog = function(m, b) {
+    let t = [
+      m ? m : '',
+      '%c%s',
+      'font-weight:bolder; color:' + (b ? '#adff2f;' : '#8b0000;'),
+      (b ? 'done.' : 'failed.')
+    ];
+    return t;
+  };
+
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-  momoTalk.prototype.progressUPdate = function (ps = 0, notAcc) {
+  momoTalk.prototype.progressUPdate = function(ps = 0, notAcc) {
     if (!notAcc) {
       this.progressElm.value += ps;
     } else {
@@ -50,7 +66,7 @@ const momoTalk = function () {
     this.progressElm.innerText = _text;
     this.progressElm.parentElement.querySelector('#ps').innerText = _text;
   };
-  momoTalk.prototype.initChack = async function () {
+  momoTalk.prototype.initChack = async function() {
     let self = this;
     document.querySelector('.init_display img#logo').remove();
     document.querySelector('.init_display .progress').style.display = 'block';
@@ -93,20 +109,12 @@ const momoTalk = function () {
             _fails.push(_res);
           };
           self.progressUPdate(_pval);
-          arr = [_t, '%c%s',
-            'font-weight:bolder; color:' + (_res ? '#adff2f;' : '#8b0000;'),
-            (_res ? 'done.' : 'failed.'),
-            ' ...(' + (i + 1) + '/' + l + ')'
-          ];
+          arr = self.mkBooLog(_t, _res).concat(
+            ' ...(' + (i + 1) + '/' + l + ')');
           self.mConsole.l.apply(null, arr);
         }
         _bool = _fails.length == 0;
-
-        arr = ['loaded ',
-          '%c%s',
-          'font-weight:bolder; color:' + (_bool ? '#adff2f;' : '#8b0000;'),
-          _bool ? 'done.' : 'failed.'
-        ];
+        arr = self.mkBooLog('loaded ', _bool);
         self.mConsole.l.apply(null, arr);
         self.progressUPdate(10);
       };
@@ -116,7 +124,7 @@ const momoTalk = function () {
         this.reqDB('./json/lastchat.json').then(async (xhr) => {
           _data = JSON.parse(xhr.response);
           this.people.unread = _data;
-          this.mConsole.l('load lastChat... ', '%c%s', 'color:#adff2f', 'done');
+          this.mConsole.l.apply(null,this.mkBooLog('load lastChat... ',xhr.response!={}));
           self.progressUPdate(10);
           _b = self.progressElm.parentElement.querySelector('.mConsole');
 
@@ -139,7 +147,7 @@ const momoTalk = function () {
     });
   }
 
-  momoTalk.prototype.countUnread = function () {
+  momoTalk.prototype.countUnread = function() {
     _countTotal = 0;
     if (this.people.unread) {
       this.people.unread.forEach((e, i) => {
@@ -148,7 +156,7 @@ const momoTalk = function () {
     }
     return _countTotal;
   }
-  momoTalk.prototype.pageRenderer = function () {
+  momoTalk.prototype.pageRenderer = function() {
     //remove ad...
     if (document.getElementById('forkongithub')) {
       document.getElementById('forkongithub').remove();
@@ -164,7 +172,8 @@ const momoTalk = function () {
     const continer = document.querySelector('.momotalk-wrapper');
     const header = document.querySelector('.title-container .title');
     const title = this.moduleName.charAt(0).toUpperCase() + this.moduleName.slice(1);
-    let header_title = null, header_order = null;
+    let header_title = null,
+      header_order = null;
 
     this.mainElm = continer;
     continer.style.display = 'inline';
@@ -259,12 +268,12 @@ const momoTalk = function () {
     el.innerText = this.countUnread();
   };
 
-  momoTalk.prototype.init = function () {
+  momoTalk.prototype.init = function() {
     this.console = document.querySelector('.progress .mConsole');
     this.console.onclick = () => this.console.classList.toggle('view');
     this.initChack();
   };
-  momoTalk.prototype.getChrImgPath = function (n) {
+  momoTalk.prototype.getChrImgPath = function(n) {
     let _dirBase = './assets/images/';
     console.log(n)
     return _dirBase + (!isNaN(n) ? this.people.DB[n].c : n) + '.png';
@@ -286,7 +295,7 @@ const momoTalk = function () {
    * @param {string} option.music.title display music title
    * @returns {HTMLElement} dumy HtmlElemant
    */
-  momoTalk.prototype.genDumyPeople = function (option) {
+  momoTalk.prototype.genDumyPeople = function(option) {
     _ew = document.createElement('li');
     //is people profile?
     _ew.className = option.isPF ? 'friends__list' : 'chats__chat chat';
@@ -372,8 +381,9 @@ const momoTalk = function () {
    * @param {number} option.n 0 for up, 1 for down.
    * @returns {Array} sorted array.
    */
-  momoTalk.prototype.userSorter = function (option) {
-    let c = null, f = null;
+  momoTalk.prototype.userSorter = function(option) {
+    let c = null,
+      f = null;
     option.n ? option.n : option.n = 0;
 
     if (option.n == 0) {
@@ -385,7 +395,7 @@ const momoTalk = function () {
     return option.arr.sort((a, b) => f(a, b));
   };
 
-  momoTalk.prototype.displayErrorPage = function () {
+  momoTalk.prototype.displayErrorPage = function() {
     _base = this.mainElm.querySelector('.chr-list_lists');
     _base.style.display = 'none';
     _constarea = document.createElement('div');
@@ -403,7 +413,7 @@ const momoTalk = function () {
     _constarea.append(_t, _imgwrap);
     document.querySelector('.room-container').append(_constarea)
   };
-  momoTalk.prototype.renderUserLists = function (sortOption) {
+  momoTalk.prototype.renderUserLists = function(sortOption) {
     const header_title = this.mainElm.querySelector('.list_header #title');
     _base = this.mainElm.querySelector('.chr-list_lists');
     if (_base) {
@@ -433,7 +443,7 @@ const momoTalk = function () {
       }
     }
   };
-  momoTalk.prototype.renderRoomLists = function () {
+  momoTalk.prototype.renderRoomLists = function() {
     _base = document.querySelector('.chr-list_lists');
     //in case reload.
     if (_base) {
@@ -484,7 +494,7 @@ const momoTalk = function () {
       document.querySelector('.chr-list_lists').appendChild(_ew);
     }
   };
-  momoTalk.prototype.renderSetupPage = function () {
+  momoTalk.prototype.renderSetupPage = function() {
     const header_title = this.mainElm.querySelector('.list_header #title');
     _base = this.mainElm.querySelector('.chr-list_lists');
     this.mainElm.querySelector('.list_header .right').remove();
