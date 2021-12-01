@@ -7,7 +7,7 @@
             "m":{
                 "tp":"yt",
                 "t":"BlueArchive Mein Theme",
-                "l":"https://www.youtube.com/watch?v=p7ZRQ0BxtMM"
+                "l":"https://youtu.be/p7ZRQ0BxtMM"
             }
         },
         {
@@ -68,7 +68,12 @@
         },
         {
             "n": "시로코",
-            "c": "shiroko"
+            "c": "shiroko",
+            "m":{
+                "tp":"yt",
+                "t":"Clear Morning - Shiroko's Song",
+                "l":"https://youtu.be/ON-7sK8lT0c"
+            }
         },
         {
             "n": "시미코",

@@ -1,0 +1,6 @@
+a = [
+    //clear Morning - Shiroko's Song
+    "https://youtu.be/ON-7sK8lT0c",
+    //current login song.
+    "https://youtu.be/p7ZRQ0BxtMM"
+]

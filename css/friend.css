@@ -27,12 +27,18 @@
 .friends__avatar.group4-avatar {
   width: 28px;
   height: 28px;
-  border-radius: 10px;
+  border-radius: 2px;
 }
 
 .friend .friend__column {
   display: flex;
   align-items: center;
+}
+
+.friend .friend__column:nth-child(2) {
+  white-space: nowrap;
+  overflow: hidden;
+  margin-left: 5px;
 }
 
 .friend .friend__avatar {
@@ -46,6 +52,10 @@
 
 .friend__content>.friend__group {
   margin-bottom: 5px;
+}
+
+.friend__status {
+  white-space: pre-line;
 }
 
 .friend__content .friend__status,
@@ -89,13 +99,15 @@
 
 .chat .chat__remain-count {
   font-weight: bold;
-  font-size: 10px;
+  font-size: 2px;
 }
 
 .friend .friend__now-listening {
-  padding: 5px 10px;
+  padding: 2px;
   border-radius: 15px;
   font-size: 14px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .friend__now-listening span {
@@ -129,7 +141,7 @@
 
 
 .friend__add-btn {
-  padding: 10px 15px;
+  padding: 2px 15px;
   display: flex;
   justify-content: center;
   align-items: center;
