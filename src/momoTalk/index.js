@@ -315,7 +315,7 @@ const momoTalk = function() {
         if (!option.isGroup) {
           _fci = document.createElement('img');
           _fci.src = option.src;
-          _fci.className = option.isPF ? 'friend__avatar' : 'm-avatar friend__avatar';
+          _fci.className = option.isPF ? 'friend__avatar' : 'friend__avatar';
         } else if (option.isGroup) {
           _fci = document.createElement('div');
           _fci.className = 'group-avatar';

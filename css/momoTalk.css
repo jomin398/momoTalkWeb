@@ -28,7 +28,7 @@
 .tab-container {
     height: inherit;
     text-align: center;
-    width: 2em;
+    width: 42px;
     position: absolute;
     font-size: 2em;
     background-color: #5d668b;
@@ -39,7 +39,7 @@
 .tab-container .tab {
     color: #fff;
     position: relative;
-    padding: 10px;
+    padding: 5px;
     text-decoration: none;
     font-size: 25px;
     /* color: #818181; */
@@ -60,8 +60,8 @@
     font-size: 0.45em;
     border-radius: 5px;
     padding: 0 0.4em;
-    top: 4px;
-    right: 8px;
+    top: 0;
+    right: 0;
     position: absolute;
     color: #fff;
     background-color: brown;
@@ -72,7 +72,7 @@
 }
 
 .content-container {
-    margin-left: 4em;
+    margin-left: 42px;
     display: flex;
     height: 100%;
     flex-direction: row;
@@ -89,7 +89,7 @@
 
 .chr-list_lists {
     margin-bottom: 38px;
-    padding: 0px 10px;
+    padding: 0px 5px;
     box-sizing: border-box;
     list-style: none;
     color: #020202;

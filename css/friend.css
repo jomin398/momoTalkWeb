@@ -13,29 +13,27 @@
 .friend .friend__avatar {
   width: 50px;
   border-radius: 38%;
-  border: 0.5px solid #e6e6e6;
 }
 
 .friend__avatar.g-avatar {
   width: 70px;
 }
 
-.friend__avatar.m-avatar {
-  width: 60px;
-}
-
 .friends__avatar.group4-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 38%;
 }
 
 .friend .friend__column {
   display: flex;
   align-items: center;
 }
+.friends__friend.friend.real-friend .friend__column .friend__content{
+  min-width: 60px;
+}
 
-.friend .friend__column:nth-child(2) {
+.friends__friend.friend.real-friend .friend__column:nth-child(2) {
   white-space: nowrap;
   overflow: hidden;
   margin-left: 5px;
